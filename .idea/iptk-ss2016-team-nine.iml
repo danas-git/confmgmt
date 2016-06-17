@@ -4,5 +4,6 @@
     <content url="file://$MODULE_DIR$" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="iptk-ss2016-team-nine node_modules" level="project" />
   </component>
 </module>
