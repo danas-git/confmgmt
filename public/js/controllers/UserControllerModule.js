@@ -6,14 +6,23 @@ angular.module('UserControllerModule',[]).controller('UserController',function($
         var email = $scope.email;
         var password = $scope.password;
         var confirmpassword = $scope.confirmpassword;
-        var instituion = $scope.institution;
+        var institution = $scope.institution;
         console.log(firstname);
         $scope.message="";
         if(password==confirmpassword){
 
-            userService.registerUser(firstname,lastname,email,password,instituion).then(function(datafromserver){
-                console.log(datafromserver);
+            userService.registerUser(firstname,lastname,email,password,institution).then(function(datafromserver){
+                var result=datafromserver.data;
+
+                if(result.state=="failure"){
+                    $scope.message=result.message;
+                }else{
+                    $scope.message="User Successfully added";
+                }
+
             });
+        }else{
+            $scope.message="Passwords do not match";
         }
 
     }

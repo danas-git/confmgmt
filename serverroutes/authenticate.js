@@ -4,34 +4,42 @@ var mongoose = require( 'mongoose' );
 var User = mongoose.model('User');
 var bCrypt = require('bcrypt-nodejs');
 
-router.post('/register',function(req,res){
-   console.log("register");
-    console.log(req.body.params.password);
-    var hashpassword=createHash(req.body.params.password);
-    //User.findOne({'email':req.body.params.email},function(err,))
-    var newUser= new User();
-    newUser.email= req.body.params.email;
-        newUser.password= hashpassword; //hash created from password
-        newUser.firstName= req.body.params.firstname;
-        newUser.lastName= req.body.params.lastname;
-        newUser.institution= req.body.params.institution;
-        newUser.privilege= "normal";
-        newUser.status= "granted";
-    newUser.save(function(err){
-        if(err){
-            console.log("Error registering user");
-        }
-        else{
-            res.send("success");
-        }
-    })
-});
+module.exports = function(passport){
+    //sends successful login state back to angular
+    router.get('/success', function(req, res){
+        res.send({state: 'success', user: req.user ? req.user : null});
+    });
 
-var createHash = function(password){
-    return bCrypt.hashSync(password, bCrypt.genSaltSync(10), null);
-};
-var isValidPassword = function(user, password){
-    return bCrypt.compareSync(password, user.password);
-};
+    //sends failure login state back to angular
+    router.get('/failure1', function(req, res){
+        res.send({state: 'failure', user: null, message: "Invalid username or password:Please try again"});
+    });
+    router.get('/failure2', function(req, res){
+        res.send({state: 'failure', user: null, message:  "User already exists for this email" });
+    });
 
-module.exports=router;
+    //log in
+    router.post('/login', passport.authenticate('login', {
+        successRedirect: '/users/success',
+        failureRedirect: '/users/failure1'
+    }));
+
+    //sign up
+    router.post('/register', passport.authenticate('signup', {
+        successRedirect: '/users/success',
+        failureRedirect: '/users/failure2'
+    }));
+
+    router.get('/loggedin', function(req,res) {
+        res.send(req.isAuthenticated() ? req.user : '0');
+    });
+
+    //log out
+    router.get('/signout', function(req, res) {
+        req.logout();
+        res.send('200');
+    });
+
+    return router;
+
+}

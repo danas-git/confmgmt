@@ -26,18 +26,19 @@
                     <form role="form">
                         <fieldset>
                             <div class="form-group">
-                                <input class="form-control" placeholder="E-mail" name="email" type="email" autofocus>
+                                <input class="form-control" placeholder="E-mail" ng-model="email" required="" type="email" autofocus>
                             </div>
                             <div class="form-group">
-                                <input class="form-control" placeholder="Password" name="password" type="password" value="">
+                                <input class="form-control" placeholder="Password" ng-model="password" required="" type="password" value="">
                             </div>
                             <div class="checkbox">
                                 <label>
                                     <input name="remember" type="checkbox" value="Remember Me">Remember Me
                                 </label>
                             </div>
+                            <strong><div>{{message}}</div></strong>
                             <!-- Change this to a button or input when using this as a form -->
-                            <a href="blank.html" class="btn btn-lg btn-success btn-block">Login</a>
+                            <button ng-click="login()" type="submit" class="btn btn-lg btn-success btn-block">Login</button>
                             <a ui-sref="register" class="btn btn-lg btn-success btn-block">Register</a>
                         </fieldset>
                     </form>

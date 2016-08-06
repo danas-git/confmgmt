@@ -6,7 +6,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 require('./models/models.js');
-var authenticate=require('./serverroutes/authenticate');
+var passport= require('passport');
+var authenticate=require('./serverroutes/authenticate')(passport);
 var index = require('./routes/index');
 //var routes = require('./index');
 //var users = require('./serverroutes/users');
@@ -29,6 +30,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(passport.initialize());
+app.use(passport.session());
+
+//// Initialize Passport
+var initPassport = require('./passport-init');
+initPassport(passport);
 //app.use('/', routes);
 //app.use('/users', users);
 
