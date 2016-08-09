@@ -1,4 +1,5 @@
 var express = require('express');
+var session = require('express-session');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -13,6 +14,13 @@ var index = require('./routes/index');
 //var users = require('./serverroutes/users');
 
 var app = express();
+var sessionOptions = {
+  secret: "secret",
+  resave: true,
+  saveUninitialized: false
+};
+
+app.use(session(sessionOptions));
 
 var mongoose = require('mongoose');
 mongoose.connect("mongodb://localhost:27017/MyCMS");

@@ -12,6 +12,17 @@ module.exports = function(passport){
 
     //sends failure login state back to angular
     router.get('/failure1', function(req, res){
+
+        //example of session usage
+        if ( !req.session.views){
+            req.session.views = 1;
+            req.session.datasample = {role: "normal",status:"granted"};
+        }else{
+            req.session.views += 1;
+        }
+        console.log("unsuccesful login : "+req.session.views);
+        console.log("unsuccesful login : "+req.session.datasample.role);
+
         res.send({state: 'failure', user: null, message: "Invalid username or password:Please try again"});
     });
     router.get('/failure2', function(req, res){
@@ -37,6 +48,9 @@ module.exports = function(passport){
     //log out
     router.get('/signout', function(req, res) {
         req.logout();
+        req.session.destroy(function(err){
+           console.log(err);
+        });
         res.send('200');
     });
 

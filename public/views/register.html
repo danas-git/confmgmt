@@ -25,27 +25,27 @@
                     <h3 class="panel-title">Please Register</h3>
                 </div>
                 <div class="panel-body">
-                    <form role="form">
+                    <form role="form" ng-submit="registerNewUser()">
                         <fieldset>
                             <div  class="form-group">
-                                First Name*: <input class="form-control" type="text" ng-model="firstname" required="" placeholder="Firstname" autofocus>
+                                First Name*: <input class="form-control" type="text" ng-model="firstname" ng-required="true" placeholder="Firstname" autofocus>
                             </div>
                             <div>
-                                Last name*: <input class="form-control" placeholder="Lastname" ng-model="lastname"  type="text" required="" autofocus>
+                                Last name*: <input class="form-control" placeholder="Lastname" ng-model="lastname"  type="text" ng-required="true" autofocus>
                             </div>
                             <div  class="form-group">
-                                Email*: <input class="form-control" placeholder="Email" ng-model="email" type="email" required="" autofocus></div>
+                                Email*: <input class="form-control" placeholder="Email" ng-model="email" type="email" ng-required="true" autofocus></div>
                             <div  class="form-group">
-                                Password*: <input class="form-control" placeholder="Password" ng-model="password"  type="password" required="" autofocus>
+                                Password*: <input class="form-control" placeholder="Password" ng-model="password"  type="password" ng-required="true" autofocus>
                             </div>
                                 <div  class="form-group">
-                                    Confirm Password*: <input class="form-control" placeholder="Confirm Password" ng-model="confirmpassword"  type="password" required="" autofocus>
+                                    Confirm Password*: <input class="form-control" placeholder="Confirm Password" ng-model="confirmpassword"  type="password" ng-required="true" autofocus>
                                 </div>
                            <!-- <div class="form-group">
                                 Postal Address: <input class="form-control" placeholder="Postal Address" name="postal address" type="postal address" value="" autofocus>
                             </div>-->
                             <div  class="form-group">
-                                Institution*: <input class="form-control" placeholder="Institution" ng-model="institution" type="text" required="" autofocus>
+                                Institution*: <input class="form-control" placeholder="Institution" ng-model="institution" type="text" ng-required="true" autofocus>
                             </div>
                            <!-- <div  class="form-group">
                                 City: <input class="form-control" placeholder="City" name="city" type="city" value="" autofocus>
@@ -58,7 +58,7 @@
                             </div>-->
                             <!-- Change this to a button or input when using this as a form -->
                             <strong><div>{{message}}</div></strong>
-                            <button class="btn btn-lg btn-success btn-block" type="submit" ng-click="registerNewUser()">Register</button>
+                            <button class="btn btn-lg btn-success btn-block" type="submit">Register</button>
                         </fieldset>
                     </form>
 

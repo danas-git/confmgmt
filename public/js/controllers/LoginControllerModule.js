@@ -1,4 +1,4 @@
-angular.module('LoginControllerModule',[]).controller('LoginController',function($scope,$location,loginService){
+angular.module('LoginControllerModule',[]).controller('LoginController',function($scope,$location,loginService,$window,$state){
     console.log("logincontroller");
 
     $scope.login = function(){
@@ -12,6 +12,9 @@ angular.module('LoginControllerModule',[]).controller('LoginController',function
                 $scope.message=result.message;
             }else{
                 $scope.message="logged in";
+                //$location.url('/home/welcome');
+                //$window.location.reload();
+                $state.go('home.welcome');
             }
 
         });

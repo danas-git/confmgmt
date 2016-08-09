@@ -18,6 +18,8 @@ angular.module('UserControllerModule',[]).controller('UserController',function($
                     $scope.message=result.message;
                 }else{
                     $scope.message="User Successfully added";
+                    $location.url('/');
+
                 }
 
             });
