@@ -15,7 +15,10 @@ angular.module('appRoutes',['ui.router']).config(['$stateProvider','$urlRouterPr
             url: "/home",
             templateUrl: 'views/home.html',
             controller: 'HomeController',
-            abstract:true
+            abstract:true,
+            resolve:{
+                logincheck: checkLoggedin
+            }
         })
         .state('home.welcome', {
             url: "/",
@@ -23,3 +26,23 @@ angular.module('appRoutes',['ui.router']).config(['$stateProvider','$urlRouterPr
         });
     $locationProvider.html5Mode(true);
 }]);
+
+var checkLoggedin = function($q, $timeout, $http, $location, $rootScope) {
+    var deferred = $q.defer();
+
+    $http.get('/users/loggedin').success(function(user) {
+
+        if (user !== '0') {
+            console.log("authenticated");
+            $rootScope.authenticated=true;
+            $rootScope.currentUser = user;
+            deferred.resolve();
+        } else { //User is not Authenticated
+            console.log("not authenticated");
+            $rootScope.authenticated=false;
+            deferred.reject();
+            $location.url('/login');
+        }
+    });
+    return deferred.promise;
+}
