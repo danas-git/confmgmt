@@ -3,8 +3,19 @@ angular.module('LoginControllerModule',[]).controller('LoginController',function
 
     $rootScope.authenticated=false;
 
+
     $rootScope.isAuthenticated= function(){
         return $rootScope.authenticated;
+    }
+
+    $rootScope.isRole= function(role){
+        console.log(role);
+        console.log($rootScope.user.privilege);
+        if(role==$rootScope.user.privilege){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     $scope.login = function(){
@@ -21,6 +32,7 @@ angular.module('LoginControllerModule',[]).controller('LoginController',function
                 $rootScope.authenticated=true;
                 //$location.url('/home/welcome');
                 //$window.location.reload();
+                $rootScope.user=result.user;
                 $state.go('home.welcome');
             }
 
