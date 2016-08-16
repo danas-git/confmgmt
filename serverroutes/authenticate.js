@@ -23,7 +23,7 @@ module.exports = function(passport){
         console.log("unsuccesful login : "+req.session.views);
         console.log("unsuccesful login : "+req.session.datasample.role);
 
-        res.send({state: 'failure', user: null, message: "Invalid username or password:Please try again"});
+            res.send({state: 'failure', user: null, message: "Invalid username or password:Please try again"});
     });
     router.get('/failure2', function(req, res){
         res.send({state: 'failure', user: null, message:  "User already exists for this email" });

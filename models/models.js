@@ -6,6 +6,10 @@ var userSchema = new mongoose.Schema({
     password: String, //hash created from password
     firstName: String,
     lastName: String,
+    postaladdress: String,
+    city: String,
+    state: String,
+    country: String,
     institution: String,
     privilege: String,
     status: String

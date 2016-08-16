@@ -7,11 +7,15 @@ angular.module('UserControllerModule',[]).controller('UserController',function($
         var password = $scope.password;
         var confirmpassword = $scope.confirmpassword;
         var institution = $scope.institution;
+        var postaladdress = $scope.postaladdress;
+        var city = $scope.city;
+        var state = $scope.state;
+        var country = $scope.country;
         console.log(firstname);
         $scope.message="";
         if(password==confirmpassword){
 
-            userService.registerUser(firstname,lastname,email,password,institution).then(function(datafromserver){
+            userService.registerUser(firstname,lastname,email,password,institution,postaladdress,city,state,country).then(function(datafromserver){
                 var result=datafromserver.data;
 
                 if(result.state=="failure"){
