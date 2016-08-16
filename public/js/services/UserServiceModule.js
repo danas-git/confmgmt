@@ -10,7 +10,57 @@ angular.module('UserServiceModule',[]).factory('userService',['$http',function($
                 password: password,
                 institution: institution
             });
+        },
+        getUserInfoByEmailid : function(emailid) {
+            console.log("Inside service!!"+emailid);
+            return $http.post("/getUserInfoByEmailid",
+                {
+                 email: emailid   
+                });
+
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }]);

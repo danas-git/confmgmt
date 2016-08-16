@@ -54,6 +54,14 @@ module.exports = function(passport){
         res.send('200');
     });
 
+    //getUserInfoBasedOnId
+    router.post('/getUserInfoByEmailid',function(req,res){
+        console.log('hello');
+        return User.findOne({'email': req.body.params.email }, function (err, user){
+            res.send(user);
+        })
+    });
+
     return router;
 
 }

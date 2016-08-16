@@ -11,6 +11,11 @@ angular.module('appRoutes',['ui.router']).config(['$stateProvider','$urlRouterPr
             templateUrl: 'views/register.html',
             controller: 'UserController'
         })
+        .state('home.editUser', {
+            url: "/editUser",
+            templateUrl: 'views/editUser.html',
+            controller: 'EditUserController'
+        })
         .state('home', {
             url: "/home",
             templateUrl: 'views/home.html',
