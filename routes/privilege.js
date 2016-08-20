@@ -21,7 +21,7 @@ router.route('/request')
     .post(function(req,res){
         console.log(req.body.userid);
         console.log(req.body.comments);
-        User.update({'_id':req.body.userid},{$set:{"comment.userComment":req.body.comments}},function(err,body){
+        User.update({'_id':req.body.userid},{$set:{"comment.userComment":req.body.comments, 'status': 'pending'}},function(err,body){
             if(err){console.log("some error while requesting privilege");}
             else{console.log("success");
                 res.send({message: "success"});}
@@ -29,19 +29,54 @@ router.route('/request')
     });
 router.route('/new')
     .post(function(req, res){
+        console.log('Accept... userid'+ req.body.userid);
+        User.update({'_id':req.body.userid},{$set:{'status': 'granted', 'privilege': 'chair'}},function(err,body){
+            if(err){console.log("some error while accepting privilege");}
+            else{console.log("success accepting");
+                res.send({message: "success accepting"});}
+        })
 
     })
+    .put(function(req, res){
+        console.log('**************************+Reject... userid'+ req.body.comments);
+        User.update({'_id':req.body.userid},{$set:{'comment.adminComment': req.body.comments, 'status': 'removed', 'privilege': 'normal'}},function(err,body){
+            if(err){console.log("some error while rejecting privilege");}
+            else{console.log("success rejecting");
+                res.send({message: "success rejecting"});}
 
+        })
+    })
     .get(function(req,res){
-
+        console.log('Before Find function');
+        User.find({status: "pending"},function(err,user){
+            console.log('Inside Find function');
+            if(err){
+                return res.send(500, err);
+            }
+            return res.send(200, user);
+        })
     });
 
 router.route('/remove')
     .get(function(req,res){
-
+        console.log('Before Find function');
+        User.find({status: "granted", privilege: "chair"},function(err,user){
+            console.log('Inside Find function');
+            if(err){
+                return res.send(500, err);
+            }
+            return res.send(200, user);
+        })
     })
-    .post(function(req,res){
+    .put(function(req, res){
+        console.log('Reject... userid'+ req.body.userid);
+            User.update({'_id':req.body.userid},{$set:{'status': 'removed', 'privilege': 'normal'}},function(err,body){
+                if(err)
+                    {console.log("some error while removing privilege");}
+                else{console.log("success removing");
+                    res.send({message: "success removing"});}
 
+            })
     });
 
 module.exports = router;

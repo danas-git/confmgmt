@@ -28,6 +28,23 @@ angular.module('appRoutes',['ui.router']).config(['$stateProvider','$urlRouterPr
                 logincheck: checkLoggedin
             }
         })
+        .state('home.FetchNew', {
+            url: "/new",
+            templateUrl: 'views/tables.html',
+            controller: 'PreReqController',
+            resolve:{
+                logincheck: checkLoggedin
+            }
+        })
+        .state('home.RemoveReq', {
+            url: "/remove",
+            templateUrl: 'views/Manage_Pri.html',
+            controller: 'RemoveReqController',
+            resolve:{
+                logincheck: checkLoggedin
+            }
+        })
+
         .state('home.editUser', {
             url: "/editUser",
             templateUrl: 'views/UserProfile.html',

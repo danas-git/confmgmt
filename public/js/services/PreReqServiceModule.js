@@ -10,6 +10,42 @@ angular.module('PreReqServiceModule',[]).factory('PreReqService',['$http',functi
                     comments: comments,
                     userid  : id
                 });
+
+    },
+
+        FetchNewReq: function() {
+            return $http.get("/priv/new",
+                {
+
+                });
+        },
+
+        Accept: function(id){
+            return $http.post("/priv/new",
+            {
+                userid : id
+            });
+        },
+
+        Reject: function(comments,id){
+            return $http.put("/priv/new",
+            {
+                comments: comments,
+                userid : id
+            });
+        },
+
+        Remove: function(id){
+            return $http.put("/priv/remove",
+                {
+                    userid : id
+                });
+        },
+        GetGranted: function() {
+            return $http.get("/priv/remove",
+                {
+
+                });
         }
     }
 }]);

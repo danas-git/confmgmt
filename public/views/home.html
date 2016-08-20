@@ -40,7 +40,7 @@
                     <li class="sidebar-search">
                         <div class="input-group custom-search-form">
                             <input type="text" class="form-control" placeholder="Search...">
-                                <span class="input-group-btn">
+                            <span class="input-group-btn">
                                     <button class="btn btn-default" type="button">
                                         <i class="fa fa-search"></i>
                                     </button>
@@ -49,20 +49,20 @@
                         <!-- /input-group -->
                     </li>
                     <li  ng-show="$root.isRole('admin')">
-                        <ul class="nav nav-second-level">
-                            <li>
-                                <a href="tables.html"><i class="fa fa-user fa-fw"></i> New Requests</a>
-                            </li>
-                            <li>
-                                <a href="Manage_Pri.html"><i class="fa fa-wrench fa-fw"></i> Manage Privileges</a>
-                            </li>
-                        </ul>
-                        <!-- /.nav-second-level -->
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a ui-sref="home.FetchNew"><i class="fa fa-user fa-fw"></i> New Requests</a>
+                        </li>
+                        <li>
+                            <a ui-sref="home.RemoveReq"><i class="fa fa-wrench fa-fw"></i> Manage Privileges</a>
+                        </li>
+                    </ul>
+                    <!-- /.nav-second-level -->
                     </li>
                     <li   ng-show="$root.isRole('normal')">
                         <ul class="nav nav-second-level">
                             <li>
-                                <a ui-sref="home.requestForPrivilege"> Request for Privilege</a>
+                                <a ui-sref="home.requestForPrivilege"><i class="fa fa-sitemap fa-fw"></i> Request for Privilege</a>
                             </li>
                         </ul>
                     <li  ng-hide="$root.isRole('admin')">

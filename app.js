@@ -12,7 +12,7 @@ var authenticate=require('./routes/authenticate')(passport);
 var index = require('./routes/index');
 var privilege = require('./routes/privilege');
 var profile = require('./routes/profile');
-//var users = require('./serverroutes/users');
+
 
 var app = express();
 var sessionOptions = {
