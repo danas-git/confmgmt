@@ -12,6 +12,7 @@ var authenticate=require('./routes/authenticate')(passport);
 var index = require('./routes/index');
 var privilege = require('./routes/privilege');
 var profile = require('./routes/profile');
+var conference = require('./routes/conference');
 
 
 var app = express();
@@ -52,6 +53,7 @@ app.use('/',index);
 app.use('/users', authenticate);
 app.use('/priv',privilege);
 app.use('/profile',profile);
+app.use('/conf',conference);
 
 
 // catch 404 and forward to error handler

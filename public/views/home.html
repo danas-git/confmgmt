@@ -49,15 +49,15 @@
                         <!-- /input-group -->
                     </li>
                     <li  ng-show="$root.isRole('admin')">
-                    <ul class="nav nav-second-level">
-                        <li>
-                            <a ui-sref="home.FetchNew"><i class="fa fa-user fa-fw"></i> New Requests</a>
-                        </li>
-                        <li>
-                            <a ui-sref="home.RemoveReq"><i class="fa fa-wrench fa-fw"></i> Manage Privileges</a>
-                        </li>
-                    </ul>
-                    <!-- /.nav-second-level -->
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a ui-sref="home.FetchNew"><i class="fa fa-user fa-fw"></i> New Requests</a>
+                            </li>
+                            <li>
+                                <a ui-sref="home.RemoveReq"><i class="fa fa-wrench fa-fw"></i> Manage Privileges</a>
+                            </li>
+                        </ul>
+                        <!-- /.nav-second-level -->
                     </li>
                     <li   ng-show="$root.isRole('normal')">
                         <ul class="nav nav-second-level">
@@ -65,10 +65,16 @@
                                 <a ui-sref="home.requestForPrivilege"><i class="fa fa-sitemap fa-fw"></i> Request for Privilege</a>
                             </li>
                         </ul>
-                    <li  ng-hide="$root.isRole('admin')">
-                        <a href="#"><i class="fa fa-sitemap fa-fw"></i> All Conferences</span></a>
+                    <li  ng-show="$root.isRole('normal')">
+                        <a ui-sref="home.listConferences"><i class="fa fa-sitemap fa-fw"></i> All Conferences</span></a>
 
-                        <!-- /.nav-second-level -->
+
+                    </li>
+
+                    <li  ng-show="$root.isRole('chair')">
+                        <a ui-sref="#"><i class="fa fa-sitemap fa-fw"></i> All Conferences</span></a>
+
+
                     </li>
                     <li   ng-show="$root.isRole('chair')">
                         <a href="#"><i class="fa fa-sitemap fa-fw"></i> My Conferences</span></a>
@@ -84,7 +90,7 @@
                         <a href="#"><i class="fa-list-alt fa-fw"></i> Reviews</span></a>
                     </li>
                     <li ng-show="$root.isRole('chair')">
-                        <a href="#"> Create Conference</a>
+                        <a ui-sref="home.create_conf"> Create Conference</a>
                         <!-- /.nav-second-level -->
                     </li>
                 </ul>

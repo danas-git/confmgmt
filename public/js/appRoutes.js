@@ -2,10 +2,10 @@ angular.module('appRoutes',['ui.router']).config(['$stateProvider','$urlRouterPr
     console.log("approutes");
     $urlRouterProvider.otherwise("/");
     $stateProvider.state('/', {
-            url: "/",
-            templateUrl: 'views/login.html',
-            controller: 'LoginController'
-        })
+        url: "/",
+        templateUrl: 'views/login.html',
+        controller: 'LoginController'
+    })
         .state('register', {
             url: "/register",
             templateUrl: 'views/register.html',
@@ -44,6 +44,22 @@ angular.module('appRoutes',['ui.router']).config(['$stateProvider','$urlRouterPr
                 logincheck: checkLoggedin
             }
         })
+        .state('home.listConferences', {
+            url: "/allconferences",
+            templateUrl: 'views/conflist.html',
+            controller: 'ConfController',
+            resolve:{
+                logincheck: checkLoggedin
+            }
+        })
+        .state('home.create_conf', {
+            url: "/createconf",
+            templateUrl: 'views/create_conf.html',
+            controller: 'ConfController',
+            resolve:{
+                logincheck: checkLoggedin
+            }
+        })
 
         .state('home.editUser', {
             url: "/editUser",
@@ -52,7 +68,7 @@ angular.module('appRoutes',['ui.router']).config(['$stateProvider','$urlRouterPr
             resolve:{
                 logincheck: checkLoggedin
             }
-    })
+        })
         .state('home.welcome', {
             url: "/",
             templateUrl: 'views/welcome_nested.html'
@@ -62,7 +78,7 @@ angular.module('appRoutes',['ui.router']).config(['$stateProvider','$urlRouterPr
 
 var checkLoggedin = function($q, $timeout, $http, $location, $rootScope) {
     if(!$rootScope.user){
-    var deferred = $q.defer();
+        var deferred = $q.defer();
         $http.get('/users/loggedin').success(function(user) {
 
             if (user !== '0') {
@@ -78,6 +94,6 @@ var checkLoggedin = function($q, $timeout, $http, $location, $rootScope) {
                 $location.url('/login');
             }
         });
-    return deferred.promise;
+        return deferred.promise;
     }
 };
