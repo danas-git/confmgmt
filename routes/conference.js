@@ -50,7 +50,7 @@ router.route('/myconferences/normal')
     .post(function(req,res){
         var userId=req.body.userId;
         console.log('Inside my conferences/normal.......userId: '+userId);
-        User.findOne({_id:userId}).populate('myConference').exec(function(err,conf){
+        User.findOne({_id:userId}).populate({path: 'myConference',populate:{path:'conferenceMembers',model:'User',match:{_id:{$ne:userId}}}}).exec(function(err,conf){
             if(err){
                 return res.send(500, err);
             }

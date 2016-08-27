@@ -35,7 +35,7 @@ var submissionSchema = new mongoose.Schema({
     submissionTitle: String,
     coAuthors:[{type:Schema.Types.ObjectId,ref:'User'}],
     abstract:String,
-    keywords:[{type:String}],
+    keywords:{type:String},
     filePath: String,
     submittedBy:{type:Schema.Types.ObjectId,ref:'User'},
     confID:{type:Schema.Types.ObjectId,ref:'Conference'},

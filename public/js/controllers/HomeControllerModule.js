@@ -2,7 +2,7 @@ angular.module('HomeControllerModule',[]).controller('HomeController',function($
     console.log("homecontroller");
 
     $rootScope.isRole= function(role){
-        // console.log(role);
+
         if(role==$rootScope.user.privilege){
             return true;
         }else{

@@ -8,6 +8,10 @@ angular.module('LoginServiceModule',[]).factory('loginService',['$http',function
                     username: email,
                     password: password
                 });
+        },
+        checkLogin : function() {
+            return $http.get('/users/loggedin');
         }
     }
+
 }]);

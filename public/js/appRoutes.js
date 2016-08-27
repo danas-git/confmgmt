@@ -91,7 +91,18 @@ angular.module('appRoutes',['ui.router']).config(['$stateProvider','$urlRouterPr
             resolve:{
                 logincheck: checkLoggedin
             }
-    })
+        })
+        .state('home.submitdoc', {
+            url: "/submission",
+            templateUrl: 'views/submission.html',
+            controller: 'SubmissionController',
+            params:{
+                selectedconf:null
+            },
+            resolve:{
+                logincheck: checkLoggedin
+            }
+        })
         .state('home.welcome', {
             url: "/",
             templateUrl: 'views/welcome_nested.html'
