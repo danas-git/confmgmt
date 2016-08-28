@@ -36,6 +36,7 @@ var upload = multer({ //multer settings
 router.use('/upload', isAuthenticated);
 router.use('/getoldinfo',isAuthenticated);
 router.use('/uploadinfo',isAuthenticated);
+router.use('/getConfObject',isAuthenticated);
 
 router.route('/upload')
     .post(function(req,res){
@@ -48,6 +49,14 @@ router.route('/upload')
             }
             res.json({error_code:0,err_desc:null});
         })
+    });
+router.route('/getConfObject')
+    .post(function(req,res){
+        Conference.findOne({'_id':req.body.confId}).populate({path:'conferenceMembers',model:'User',match:{_id:{$ne:req.body.userId}}}).exec(function(err,data){
+            if(data){
+                res.json(data);
+            }
+        });
     });
 
 router.route('/getoldinfo')

@@ -3,13 +3,18 @@ angular.module('SubmissionControllerModule',['ngFileUpload']).controller('Submis
     $scope.message="";
     $scope.alreadysubmitted=false;
 
-    var conference = $stateParams.selectedconf;
-    $scope.coauthors=conference.conferenceMembers;
+   // var conference = $stateParams.selectedconf;
+   console.log($stateParams.confId);
 
-    submissionService.getoldinfo(conference,$rootScope.user).then(function(datafromserver){
-                        console.log(datafromserver.data);
-                        $scope.sub=datafromserver.data;
-                        $scope.alreadysubmitted=true;
+    submissionService.getConfObject($stateParams.confId,$rootScope.user._id).then(function(datafromserver){
+        console.log("insideget confid");
+        var conference = datafromserver.data;
+        $scope.coauthors=conference.conferenceMembers;
+        submissionService.getoldinfo(conference,$rootScope.user).then(function(datafromserver){
+                                console.log(datafromserver.data);
+                                $scope.sub=datafromserver.data;
+                                $scope.alreadysubmitted=true;
+            });
     });
 
     $rootScope.isRole= function(role){
@@ -22,7 +27,10 @@ angular.module('SubmissionControllerModule',['ngFileUpload']).controller('Submis
     };
 
     $scope.uploadDoc = function(){
-    var conference = $stateParams.selectedconf;
+
+    submissionService.getConfObject($stateParams.confId,$rootScope.user._id).then(function(datafromserver){
+            var conference = datafromserver.data;
+
     var subenddate = new Date(conference.submissionEndDate);
     var currentdate = new Date();
     if(currentdate<subenddate){
@@ -62,6 +70,7 @@ angular.module('SubmissionControllerModule',['ngFileUpload']).controller('Submis
     }else{
     $scope.message="Submission EndDate is over";
     }
+    });
     }
 
 });

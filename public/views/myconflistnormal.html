@@ -20,7 +20,7 @@
                         <tbody >
                         <tr class="odd gradeX" ng-repeat="x in conferenceData.myConference track by $index">
                             <td>{{$index+1}}</td>
-                            <td><a ui-sref="home.submitdoc({selectedconf:x})" >{{ x.conferenceTitle }}</a></td>
+                            <td><a ui-sref="home.submitdoc({confId:value.getId(x)})" >{{ x.conferenceTitle }}</a></td>
                             <td>{{ x.department }}</td>
                             <td>{{ x.conferenceDescription }}</td>
                             <td>{{ x.submissionEndDate |date: 'dd-MM-yyyy' }}</td>

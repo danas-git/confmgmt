@@ -93,12 +93,9 @@ angular.module('appRoutes',['ui.router']).config(['$stateProvider','$urlRouterPr
             }
         })
         .state('home.submitdoc', {
-            url: "/submission",
+            url: "/submission/:confId",
             templateUrl: 'views/submission.html',
             controller: 'SubmissionController',
-            params:{
-                selectedconf:null
-            },
             resolve:{
                 logincheck: checkLoggedin
             }

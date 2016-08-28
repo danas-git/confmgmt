@@ -8,6 +8,12 @@ angular.module('SubmissionServiceModule',[]).factory('submissionService',['$http
                 submission: submission
             });
         },
+        getConfObject: function(confId,userId){
+            return $http.post("/submission/getConfObject",{
+                confId:confId,
+                userId:userId
+            });
+        },
         getoldinfo: function(conference,user){
             console.log("getoldinfo");
             console.log(conference.submissionEndDate);
