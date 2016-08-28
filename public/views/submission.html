@@ -28,7 +28,7 @@
                     <div  class="form-group">
 					<span><strong>Co-Authors:</strong>
 					<select class="form-control" id="sel1" ng-model="sub.coAuthors" multiple>
-                        <option ng-repeat="ca in coauthors" value="{{value.getId(ca)}}">{{ca.firstName}} - {{ca.email}}</option>
+                        <option ng-repeat="ca in coauthors" value="{{value.getId(ca)}}">{{ca.firstName}} {{ca.lastName}} - ({{ca.postalAddress}},{{ca.city}},{{ca.state}},{{ca.country}}) - <strong>{{ca.email}}</strong></option>
                     </select>
 					</span>
                     </div>
