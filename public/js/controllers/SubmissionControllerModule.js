@@ -9,6 +9,7 @@ angular.module('SubmissionControllerModule',['ngFileUpload']).controller('Submis
     submissionService.getConfObject($stateParams.confId,$rootScope.user._id).then(function(datafromserver){
         console.log("insideget confid");
         var conference = datafromserver.data;
+        $scope.selectedconf=conference;
         $scope.coauthors=conference.conferenceMembers;
         submissionService.getoldinfo(conference,$rootScope.user).then(function(datafromserver){
                                 console.log(datafromserver.data);
