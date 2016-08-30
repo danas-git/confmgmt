@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f14d9bbc-b0ab-4ba6-8821-80fbd624a954" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/uploads/57bfcadc6928f2ba7d1167f3.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/uploads/57c1e20c10d6b8d136247aee.pdf" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/models.js" afterPath="$PROJECT_DIR$/models/models.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/controllers/SubmissionControllerModule.js" afterPath="$PROJECT_DIR$/public/js/controllers/SubmissionControllerModule.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/views/submission.html" afterPath="$PROJECT_DIR$/public/views/submission.html" />
-    </list>
+    <list default="true" id="f14d9bbc-b0ab-4ba6-8821-80fbd624a954" name="Default" comment="" />
     <ignored path="iptk-ss2016-team-nine.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
