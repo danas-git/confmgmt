@@ -36,7 +36,7 @@ var submissionSchema = new mongoose.Schema({
     coAuthors:[{type:Schema.Types.ObjectId,ref:'User'}],
     abstract:String,
     keywords:{type:String},
-    filePath: String,
+    uploadStatus: {type:String, enum: ['complete','incomplete']},
     submittedBy:{type:Schema.Types.ObjectId,ref:'User'},
     confID:{type:Schema.Types.ObjectId,ref:'Conference'},
     submissionStatus:{type:String,enum: ['complete','incomplete']},

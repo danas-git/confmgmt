@@ -8,6 +8,8 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3>SDN Seminar </h3>
+                <h5>Submission End Date : {{conference.submissionEndDate|date: 'dd-MM-yyyy'}}</h5>
+                <h5>Review End Date : {{conference.reviewEndDate|date: 'dd-MM-yyyy'}}</h5>
             </div>
             <!-- /.panel-heading -->
             <div class="panel-body">
@@ -35,28 +37,35 @@
 
                     <div class="form-group">
                         <div><strong>Upload document*:</strong></div>
-                        <div class="col-lg-3 form-group" ng-show="alreadysubmitted">
+                        <div class="col-lg-3 form-group" ng-show="previousdoc">
                             <button class="btn btn-sm btn-success btn-block" type="submit">View Previous Upload</button>
                         </div>
-                        <input class="form-control" ngf-select ng-model="sub.uploadFile" name="uploadFile" ngf-accept="'.pdf'" ngf-multiple="false" type="file" ng-required="true" autofocus>
+                        <input class="form-control" ngf-select ng-model="sub.uploadFile" name="uploadFile" id="uploadFile" ngf-accept="'.pdf'" ngf-multiple="false" type="file" ng-required="true" autofocus>
                     </div>
                     <strong><div>{{message}}</div></strong>
                     <strong><div>{{progress}}</div></strong>
 
-                    <div class="col-lg-2 col-lg-offset-7 form-group">
-                        <button class="btn btn-sm btn-success btn-block" type="submit">Submit</button>
-                    </div>
-                    <div class="col-lg-2 col-lg-offset-1 form-group">
-                        <button class="btn btn-sm btn-success btn-block" type="submit">Withdraw</button>
+                    <div class="col-lg-2 col-lg-offset-10 form-group">
+                        <button class="btn btn-sm btn-success btn-block" ng-disabled="enddateover || submitted" type="submit">Submit</button>
                     </div>
                 </form>
+                <div class="row">
+                    <div class="col-lg-2">
+                        <button class="btn btn-sm btn-success btn-block" ng-disabled="enddateover || submitted" ng-click="saveSubmission()">Save</button>
+                    </div>
+                    <div class="col-lg-2">
+                        <button class="btn btn-sm btn-success btn-block"  ng-disabled="enddateover || !submitted" ng-click="withdrawSubmission()">Withdraw</button>
+                    </div>
+
+                </div>
+
                 <div>
                     <h4>Review Details</h4>
                 </div>
                 <div>
                     <p><strong>Review Status:</strong> Unassigned</p>
                     <p><strong>Reviewed Date:</strong> Review not done</p>
-                    <p><strong>Review Deadline:</strong> {{selectedconf.reviewEndDate|date: 'dd-MM-yyyy' }}</p>
+                    <p><strong>Review Deadline:</strong> {{conference.reviewEndDate|date: 'dd-MM-yyyy'}}</p>
                     <p><strong>Feedback:</strong> Review not done</p>
                     <p><strong>Rating:</strong> Review not done</p>
 
