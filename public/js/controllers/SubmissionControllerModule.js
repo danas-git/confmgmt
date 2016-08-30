@@ -19,9 +19,9 @@ angular.module('SubmissionControllerModule',['ngFileUpload']).controller('Submis
                                     $scope.previousdoc=true;
                                 }
 
-                                if(datafromserver.data.SubmissionStatus=="complete"){
+                                if(datafromserver.data.submissionStatus=="complete"){
                                     $scope.submitted=true;
-                                }else if(datafromserver.data.SubmissionStatus=="incomplete" ||datafromserver.data.SubmissionStatus=="closed"){
+                                }else if(datafromserver.data.submissionStatus=="incomplete" ||datafromserver.data.submissionStatus=="closed"){
                                     $scope.submitted=false;
                                 }
             });
