@@ -67,7 +67,7 @@ router.route('/assignReviewer')
                                Conference.find({'_id':req.body.confId})
                                    .populate({
                                        path: 'conferenceSubmissions',
-                                       populate: {path: 'submittedBy reviewID',
+                                       populate: {path: 'coAuthors submittedBy reviewID',
                                            populate:{path:'reviewerID',select:'firstName lastName email institution country city postalAddress'}
                                        }
                                    }).exec(function(err,data){
