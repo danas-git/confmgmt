@@ -1,103 +1,255 @@
 
+<div class="row" ng-repeat="confObject in bigData">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3>{{confObject.conferenceTitle}} </h3>
+            </div>
 
-        <div class="row">
-            <!-- /.col-lg-12 -->
-        </div>
-        <!-- /.row -->
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3>SDN Seminar </h3>
-                    </div>
-                    <!-- /.panel-heading -->
-                    <div class="panel-body">
-			<div>
-				<p><strong>Chair Members:</strong> Professor, asst chair1, asst chair2</p>
-				<p><strong>Created Date:</strong> 01-01-2016</p>
-				<form role="form" ng-submit="update()">
-                           	<div  class="form-group">
-					<span><strong>Submission deadline:</strong><input class="form-control" type="date" value="21-02-2016" id="date" name="date"></span>
-				</div>
-				<div  class="form-group">
-					<span><strong>Review deadline:</strong><input class="form-control" type="date" value="21-02-2016" id="date" name="date"></span>
-				</div>
-				<div class="row">
-				<div class="col-lg-3">
-				<button class="btn btn-sm btn-success btn-block">Update</button>
-				</div>
-				</div>
-				</form>
-				
-			</div>
-			<br>
-			<div>
-				<strong>SUBMISSIONS</strong>				
-			</div>
-			<br>
-                        <div class="dataTable_e">
-                            <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
-                                <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Submitter Name</th>
-                                    <th>Submitted Date</th>
-                                    <th>Uploaded Document</th>
-                                    <th>Reviewer</th>
+            <div class="panel-body">
+                <div>
+                    <p><strong>Description:</strong>{{confObject.conferenceDescription}}</p>
+                    <p><strong>Department:</strong>{{confObject.department}}</p>
+                    <p><strong>Created Date:</strong> {{confObject.conferenceStartDate| date:"medium"|| 'empty' }}</p>
+                    <!-- <p><strong>Submission End Date</strong> {{confObject.submissionEndDate |date:'MMM d, y h:mm:ss a'}}</p>-->
+                    <p><strong>Submission End Date:</strong> <a href="#" editable-combodate="confObject.submissionEndDate" onbeforesave="subDate($data)">
+                        {{ (confObject.submissionEndDate | date:"medium") || 'empty' }}
+                    </a></p>
+                    <p><strong>Review End Data:</strong><a href="#" editable-combodate="confObject.reviewEndDate" onbeforesave="revDate($data)">
+                        {{ (confObject.reviewEndDate | date:"medium") || 'empty' }}
+                    </a></p>
+                </div>
+                <br>
+                <div>
+                    <strong>SUBMISSIONS</strong>
+                </div>
+                <br>
+                <div class="table-responsive">
+                    <table  class="table table-hover " >
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Submission</th>
+                            <th>Author</th>
+                            <th>File</th>
+                            <th>Reviewer</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="odd gradeX" ng-repeat="subObject in confObject.conferenceSubmissions track by $index" ng-show="subObject.submissionStatus=='complete'">
 
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr class="odd gradeX">
-                                    <td>1</td>
-                                    <td>Shashank</td>
-                                    <td>15-01-2016</td>
-                                    <td><button class="btn btn-sm btn-success btn-block">Download</button></td>
-				    <td><select class="form-control" id="sel1">
-    			        	<option>Unassigned</option>
-			       	        <option>Sheelen</option>
-			    	        <option>Dhana</option>
-			                <option>Dhanashree</option>
-			                <option>Dhanish</option>
-                                        </select>
-                                    </td>                               </tr>
-                                <tr class="odd gradeX">
-                                    <td>3</td>
-                                    <td>Dhanish</td>
-                                    <td>16-01-2016</td>
-                                    <td><button class="btn btn-sm btn-success btn-block">Download</button></td>
-				    <td><select class="form-control" id="sel1">
-    			        	<option>Unassigned</option>
-			       	        <option>Sheelen</option>
-			    	        <option>Dhana</option>
-			                <option>Dhanashree</option>
-			                <option>Dhanish</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr class="odd gradeX">
-                                   <td>4</td>
-                                    <td>Dhanashree</td>
-                                    <td>21-01-2016</td>
-                                    <td><button class="btn btn-sm btn-success btn-block">Download</button></td>
-				    <td><select class="form-control" id="sel1">
-    			        	<option>Unassigned</option>
-			       	        <option>Sheelen</option>
-			    	        <option>Dhana</option>
-			                <option>Dhanashree</option>
-			                <option>Dhanish</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-				<div class="col-lg-3">
-				<button class="btn btn-sm btn-success btn-block">Auto Assign</button>
-				</div>
-                        </div>
+                                <td ><span class="glyphicon glyphicon-stop" style="color:lime"></span></td>
+
+                                <td><p data-toggle="modal" data-target="#modal{{value.getId(subObject)}}"><a>{{subObject.submissionTitle}}</a></p>
+                                    <div class="modal fade" id="modal{{value.getId(subObject)}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                    <h4 class="modal-title" >{{subObject.submissionTitle}}</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <dl class="dl-horizontal">
+                                                        <dt>Abstract</dt>
+                                                        <dd>{{ subObject.abstract }}</dd>
+                                                    </dl>
+                                                    <dl class="dl-horizontal">
+                                                        <dt>Keywords</dt>
+                                                        <dd>{{subObject.keywords}}</dd>
+                                                    </dl>
+                                                    <dl class="dl-horizontal">
+                                                        <dt>Submission Status </dt>
+                                                        <dd>{{ subObject.submissionStatus}}</dd>
+                                                    </dl>
+
+                                                        <dt >Co-Authors:</dt>
+                                                    <dl class="dl-horizontal" ng-repeat="coAuth in subObject.coAuthors">
+                                                        <dt>Name</dt>
+                                                        <dd >{{coAuth.firstName}} {{coAuth.lastName}}</dd>
+                                                        <dt>Email</dt>
+                                                        <dd >{{coAuth.email}}</dd>
+                                                    </dl>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td><p data-toggle="modal" data-target="#modal{{subObject.submittedBy.email}}"><a>{{subObject.submittedBy.email}}</a></p>
+                                    <div class="modal fade" id="modal{{subObject.submittedBy.email}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                    <h4 class="modal-title" >Email: {{subObject.submittedBy.email}}</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <dl class="dl-horizontal">
+                                                        <dt>First Name</dt>
+                                                        <dd>{{subObject.submittedBy.firstName}}</dd>
+                                                    </dl>
+                                                    <dl class="dl-horizontal">
+                                                        <dt>Last Name</dt>
+                                                        <dd>{{subObject.submittedBy.lastName}}</dd>
+                                                    </dl>
+                                                    <dl class="dl-horizontal">
+                                                        <dt>Institution </dt>
+                                                        <dd>{{subObject.submittedBy.institution}}</dd>
+                                                    </dl>
+                                                    <dl class="dl-horizontal">
+                                                        <dt>Address</dt>
+                                                        <dd>{{subObject.submittedBy.postalAddress}}, {{subObject.submittedBy.city}}, {{subObject.submittedBy.state}}</dd>
+                                                        <dt>Country</dt>
+                                                        <dd>{{subObject.submittedBy.country}}</dd>
+                                                    </dl>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td><button class="btn btn-xs btn-info ">Download</button></td>
+
+                                <td>
+                                    <select class="form-control" ng-model="reviewer" ng-hide="subObject.reviewID">
+                                        <option ng-repeat="auth in authors track by $index " ng-show="reviewerFilter(auth.email,subObject.submittedBy.email)" >{{auth.email}}</option>
+                                    </select>
+
+                                    <p data-toggle="modal" data-target="#modal3{{$index}}"><a>{{subObject.reviewID.reviewerID.email}}</a></p>
+                                        <div class="modal fade" id="modal3{{$index}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                        <h4 class="modal-title" >Review</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <dl class="dl-horizontal">
+                                                            <dt>Expertise</dt>
+                                                            <dd>{{subObject.reviewID.reviewerExpertise}}</dd>
+                                                            <dt>Overall Evaluation</dt>
+                                                            <dd>{{subObject.reviewID.overallEvaluation}}</dd>
+                                                            <dt>Summary </dt>
+                                                            <dd>{{subObject.reviewID.summary}}</dd>
+                                                            <dt>StrongPoints </dt>
+                                                            <dd>{{subObject.reviewID.strongPoints}}</dd>
+                                                            <dt>WeakPoints </dt>
+                                                            <dd>{{subObject.reviewID.weakPoints}}</dd>
+                                                            <dt>Comments</dt>
+                                                            <dd>{{subObject.reviewID.comments}}</dd>
+                                                        </dl>
+                                                        <dl class="dl-horizontal">
+                                                            <dt>Reviewer details :</dt>
+                                                            <dd></dd>
+                                                            <dt>Email</dt>
+                                                            <dd>{{subObject.reviewID.reviewerID.email}}</dd>
+                                                            <dt>Name</dt>
+                                                            <dd>{{subObject.reviewID.reviewerID.firstName}} {{subObject.reviewID.reviewerID.lastName}}</dd>
+                                                            <dt>Institution</dt>
+                                                            <dd>{{subObject.reviewID.reviewerID.institution}}</dd>
+                                                            <dt>Address</dt>
+                                                            <dd>{{subObject.reviewID.reviewerID.postalAddress}}, {{subObject.reviewID.reviewerID.city}}, {{subObject.reviewID.reviewerID.country}}</dd>
+                                                        </dl>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </td>
+                                <td><button ng-hide="subObject.reviewID" class="btn btn-xs btn-success" ng-click="assign(reviewer,value.getId(subObject))">Assign</button> <p style="color:green;font-size: 13px;font-weight: 700" ng-show="subObject.reviewID">ASSIGNED</p></td>
+                            </tr>
+
+
+                            <tr class="odd gradeX" ng-repeat="subObject in confObject.conferenceSubmissions track by $index" ng-show="subObject.submissionStatus=='incomplete'">
+                                <td ><span class="glyphicon glyphicon-stop" style="color:yellow"></span></td>
+                                <td><p data-toggle="modal" data-target="#modal1{{value.getId(subObject)}}"><a>{{subObject.submissionTitle}}</a></p>
+                                    <div class="modal fade" id="modal1{{value.getId(subObject)}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                    <h4 class="modal-title" >{{subObject.submissionTitle}}</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <dl class="dl-horizontal">
+                                                        <dt>Abstract</dt>
+                                                        <dd>{{ subObject.abstract }}</dd>
+                                                    </dl>
+                                                    <dl class="dl-horizontal">
+                                                        <dt>Keywords</dt>
+                                                        <dd>{{subObject.keywords}}</dd>
+                                                    </dl>
+                                                    <dl class="dl-horizontal">
+                                                        <dt>Submission Status </dt>
+                                                        <dd>{{ subObject.submissionStatus}}</dd>
+                                                    </dl>
+                                                    <dt >Co-Authors:</dt>
+                                                    <dl class="dl-horizontal" ng-repeat="coAuth in subObject.coAuthors">
+                                                        <dt>Name</dt>
+                                                        <dd >{{coAuth.firstName}} {{coAuth.lastName}}</dd>
+                                                        <dt>Email</dt>
+                                                        <dd >{{coAuth.email}}</dd>
+                                                    </dl>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td><p data-toggle="modal" data-target="#modal1{{subObject.submittedBy.email}}"><a>{{subObject.submittedBy.email}}</a></p>
+                                    <div class="modal fade" id="modal1{{subObject.submittedBy.email}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                    <h4 class="modal-title" >Email: {{subObject.submittedBy.email}}</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <dl class="dl-horizontal">
+                                                        <dt>First Name</dt>
+                                                        <dd>{{subObject.submittedBy.firstName}}</dd>
+                                                    </dl>
+                                                    <dl class="dl-horizontal">
+                                                        <dt>Last Name</dt>
+                                                        <dd>{{subObject.submittedBy.lastName}}</dd>
+                                                    </dl>
+                                                    <dl class="dl-horizontal">
+                                                        <dt>Institution </dt>
+                                                        <dd>{{subObject.submittedBy.institution}}</dd>
+                                                    </dl>
+                                                    <dl class="dl-horizontal">
+                                                        <dt>Address</dt>
+                                                        <dd>{{subObject.submittedBy.postalAddress}}, {{subObject.submittedBy.city}}, {{subObject.submittedBy.state}}</dd>
+                                                        <dt>Country</dt>
+                                                        <dd>{{subObject.submittedBy.country}}</dd>
+                                                    </dl>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td colspan="3"><button class="btn btn-xs btn-info">Download</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="col-lg-3">
+                    <button class="btn btn-sm btn-success btn-block">Auto Assign</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
+
 

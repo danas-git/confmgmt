@@ -45,7 +45,7 @@ var submissionSchema = new mongoose.Schema({
 
 var reviewSchema = new mongoose.Schema({
     reviewerExpertise: String,
-    overallEvaluation:{type:String, enum: ['strongaccept','accept','borderline','reject','strongreject']},
+    overallEvaluation:{type:String, enum: ['strongaccept','accept','borderline','reject','strongreject','NotEvaluated']},
     summary: String,
     strongPoints: String,
     weakPoints: String,

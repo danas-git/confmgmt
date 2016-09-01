@@ -14,6 +14,7 @@ var privilege = require('./routes/privilege');
 var profile = require('./routes/profile');
 var conference = require('./routes/conference');
 var submission = require('./routes/submission');
+var editConferenceChair = require('./routes/editConferenceChair');
 
 
 var app = express();
@@ -56,6 +57,7 @@ app.use('/priv',privilege);
 app.use('/profile',profile);
 app.use('/conf',conference);
 app.use('/submission',submission);
+app.use('/editConf',editConferenceChair);
 
 
 // catch 404 and forward to error handler

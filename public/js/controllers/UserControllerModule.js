@@ -23,9 +23,7 @@ angular.module('UserControllerModule',[]).controller('UserController',function($
                 }else{
                     $scope.message="User Successfully added";
                     $location.url('/');
-
                 }
-
             });
         }else{
             $scope.message="Passwords do not match";

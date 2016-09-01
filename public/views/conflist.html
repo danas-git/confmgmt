@@ -20,11 +20,11 @@
                                 </thead>
                                 <tbody>
                                 <tr class="odd gradeX" ng-repeat="x in result_allconf track by x.conferenceTitle">
-                                    <td><button type="button" class="btn btn-primary btn-xs btn-info" data-toggle="modal" data-target="#example{{x.conferenceTitle}}">
+                                    <td><button type="button" class="btn btn-primary btn-xs btn-info" data-toggle="modal" data-target="#example{{value.getId(x)}}">
                                         More Info
                                     </button>
 
-                                        <div class="modal fade" id="example{{x.conferenceTitle}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                        <div class="modal fade" id="example{{value.getId(x)}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
@@ -57,7 +57,7 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td><a href="#">{{ x.conferenceTitle }}</a></td>
+                                    <td>{{ x.conferenceTitle }}</td>
 				                    <td>{{ x.department }}</td>
                                     <td>{{ x.conferenceDescription }}</td>
                                     <td>{{ x.submissionEndDate |date: 'dd-MM-yyyy'}}</td>

@@ -1,4 +1,4 @@
-angular.module('cms', ['ui.router','xeditable','ngRoute', 'appRoutes','LoginControllerModule','LoginServiceModule',
+angular.module('cms', ['ui.router','xeditable','angularMoment','ui.bootstrap','ngRoute', 'appRoutes','LoginControllerModule','LoginServiceModule',
     'UserControllerModule','UserServiceModule','HomeControllerModule','HomeServiceModule','PreReqServiceModule','PreReqControllerModule',
     'editUserControllerModule','RemoveReqControllerModule','ConfControllerModule','ConfServiceModule','ConfControllerNormalUserModule',
     'ConfServiceNormalModule','MyConfServiceModule','MyConfControllerModule','SubmissionControllerModule','SubmissionServiceModule'

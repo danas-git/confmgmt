@@ -3,7 +3,8 @@ var router = express.Router();
 var mongoose = require( 'mongoose' );
 var User = mongoose.model('User');
 var Conference = mongoose.model('Conference');
-
+var Submission = mongoose.model('Submission');
+var Review = mongoose.model('Review');
 //Used for routes that must be authenticated.
 function isAuthenticated (req, res, next) {
     // if user is authenticated in the session, call the next() to call the next request handler
@@ -17,6 +18,7 @@ function isAuthenticated (req, res, next) {
 router.use('/createConf', isAuthenticated);
 router.use('/allconferences', isAuthenticated);
 router.use('/myconferences', isAuthenticated);
+router.use('/showconf', isAuthenticated);
 
 router.route('/createConf')
     .post(function(req,res){
@@ -89,17 +91,23 @@ router.route('/allconferences/join')
                 })
         })
     });
-router.route('/showconf/chair/:confId')
+
+router.route('/showconf/chair')
     .get(function(req,res){
-        console.log('Before Find my conf function of the chair');
-        // var confId=req.params.confId;
-        console.log("confid................................."+req.confId);
-        //Conference.find({'_id': confId}, function(err,conf){
-        //    if(err){
-        //        return res.send(500, err);
-        //    }
-        //    return res.send(200,conf);
+        console.log(req.param('confId'));
+
+        Conference.find({'_id':req.param('confId')})
+        .populate({
+            path: 'conferenceSubmissions',
+            populate: {path: 'coAuthors submittedBy reviewID',
+                populate:{path:'reviewerID',select:'firstName lastName email institution country city postalAddress'}
+            }
+        }).exec(function(err,data){
+                if(err){console.log('error: '+err);throw err;}
+                if(data){res.json(data);}
+            })
     });
+
 
 module.exports = router;
 
