@@ -33,6 +33,7 @@ angular.module('MyConfControllerModule',[]).controller('MyConfController',functi
         })
     };
     $scope.closeReview = function(){
+        console.log("hit");
         MyConfService.closeReview($scope.currentConferenceId).then(function(object){
             $state.go($state.current, {}, {reload: true});
         })

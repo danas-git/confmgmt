@@ -22,7 +22,7 @@ angular.module('appRoutes',['ui.router']).config(['$stateProvider','$urlRouterPr
         })
         .state('home.requestForPrivilege', {
             url: "/request",
-            templateUrl: 'views/requestprivilege.html',
+            templateUrl: 'views/requestPrivilegeNormalUser.html',
             controller: 'PreReqController',
             resolve:{
                 logincheck: checkLoggedin
@@ -38,7 +38,7 @@ angular.module('appRoutes',['ui.router']).config(['$stateProvider','$urlRouterPr
         })
         .state('home.RemoveReq', {
             url: "/remove",
-            templateUrl: 'views/Manage_Pri.html',
+            templateUrl: 'views/managePrivilegeAdmin.html',
             controller: 'RemoveReqController',
             resolve:{
                 logincheck: checkLoggedin
@@ -46,7 +46,7 @@ angular.module('appRoutes',['ui.router']).config(['$stateProvider','$urlRouterPr
         })
         .state('home.listConferences', {
             url: "/allconferences",
-            templateUrl: 'views/conflist.html',
+            templateUrl: 'views/allConferencesNormalUser.html',
             controller: 'ConfController',
             resolve:{
                 logincheck: checkLoggedin
@@ -54,7 +54,7 @@ angular.module('appRoutes',['ui.router']).config(['$stateProvider','$urlRouterPr
         })
         .state('home.myConferences', {
             url: "/myconferences/chair",
-            templateUrl: 'views/myconflist.html',
+            templateUrl: 'views/myConferencesChair.html',
             controller: 'ConfController',
             resolve:{
                 logincheck: checkLoggedin
@@ -62,7 +62,7 @@ angular.module('appRoutes',['ui.router']).config(['$stateProvider','$urlRouterPr
         })
         .state('home.myConfChair', {
             url: "/showconf/chair/:confId",
-            templateUrl: 'views/conf_chair.html',
+            templateUrl: 'views/conferenceChair.html',
             controller: 'MyConfController',
             resolve:{
                 logincheck: checkLoggedin
@@ -70,7 +70,7 @@ angular.module('appRoutes',['ui.router']).config(['$stateProvider','$urlRouterPr
         })
         .state('home.create_conf', {
             url: "/createconf",
-            templateUrl: 'views/create_conf.html',
+            templateUrl: 'views/createConferenceChair.html',
             controller: 'ConfController',
             resolve:{
                 logincheck: checkLoggedin
@@ -78,7 +78,7 @@ angular.module('appRoutes',['ui.router']).config(['$stateProvider','$urlRouterPr
         })
         .state('home.normal', {
             url: "/myconferences/normal",
-            templateUrl: 'views/myconflistnormal.html',
+            templateUrl: 'views/myConferenceNormalUser.html',
             controller: 'ConfControllerNormalUser',
             resolve:{
                 logincheck: checkLoggedin
@@ -94,7 +94,7 @@ angular.module('appRoutes',['ui.router']).config(['$stateProvider','$urlRouterPr
         })
         .state('home.submitdoc', {
             url: "/submission/:confId",
-            templateUrl: 'views/submission.html',
+            templateUrl: 'views/submissionNormalUser.html',
             controller: 'SubmissionController',
             resolve:{
                 logincheck: checkLoggedin

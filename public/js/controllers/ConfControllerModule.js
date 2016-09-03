@@ -1,16 +1,5 @@
 angular.module('ConfControllerModule',[]).controller('ConfController',function($scope,ConfService,$location,$state,$rootScope){
     console.log("ConfController");
-    //$scope.chairMemberList = "";
-    /*var submissionDate = document.getElementById('submissionDate');
-    var reviewDate = document.getElementById('reviewDate');
-    submissionDate.addEventListener('change',function () {
-        if(submissionDate.value)
-            reviewDate.min = submissionDate.value;
-    },false);
-    reviewDate.addEventListener('change',function () {
-        if(reviewDate.value)
-            submissionDate = reviewDate.value;
-    },false);*/
 
     $scope.createConference= function () {
         var id=$rootScope.user._id;
@@ -35,13 +24,20 @@ angular.module('ConfControllerModule',[]).controller('ConfController',function($
         });
         return $scope.flag;
     };
-
-    ConfService.ListConference().then(function(conf){
-        $scope.result_allconf=conf.data;
-        console.log($scope.result_allconf);
-        $scope.id1=$rootScope.user._id;
-    });
-
+    if($rootScope.user.privilege=="normal") {
+        ConfService.ListConferenceNormal().then(function (conf) {
+            $scope.result_allconf = conf.data;
+            console.log($scope.result_allconf);
+        });
+    }
+    if($rootScope.user.privilege=="chair") {
+        console.log("hehehe");
+        console.log($rootScope.user._id);
+        ConfService.ListConferenceChair($rootScope.user._id).then(function (conf) {
+            $scope.result_allconf=conf.data;
+            console.log($scope.result_allconf);
+        });
+    }
     $scope.Join = function(x) {
         console.log('Joining the conf');
         var userId= $rootScope.user._id;

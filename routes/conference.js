@@ -60,7 +60,7 @@ router.route('/myconferences/normal')
         });
     });
 
-router.route('/allconferences')
+router.route('/allconferences/normal')
     .get(function(req,res){
         console.log('Before Find all conf function');
         var currDate = new Date();
@@ -70,6 +70,16 @@ router.route('/allconferences')
                 return res.send(500, err);
             }
             return res.send(200,conf);
+        })
+    });
+
+router.route('/allconferences/chair')
+    .get(function(req,res){
+        Conference.find({'createdBy':req.param('userId')},function(err,data){
+            if(err){
+                return res.send(500, err);
+            }
+            return res.send(200,data);
         })
     });
 

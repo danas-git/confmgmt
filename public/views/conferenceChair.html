@@ -4,7 +4,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <p style="font-size:26px;font-weight: 600">{{confObject.conferenceTitle}}<span style="font-size:11px;font-weight: 700;color: green">&nbsp;&nbsp;{{Status}}*</span> </p>
-                <button ng-show="Status=='Submission Stage'" class="btn btn-xs btn-danger" ng-click="closeSubmission()">Close Submission</button><button ng-show="Status=='Review Stage'" class="btn btn-xs btn-danger">Close Review</button>
+                <button ng-show="Status=='Submission Stage'" class="btn btn-xs btn-danger" ng-click="closeSubmission()">Close Submission</button><button ng-show="Status=='Review Stage'" ng-click="closeReview()" class="btn btn-xs btn-danger">Close Review</button>
             </div>
 
             <div class="panel-body">
@@ -120,7 +120,7 @@
                                 <td><button class="btn btn-xs btn-info ">Download</button></td>
 
                                 <td>
-                                    <select class="form-control" ng-model="reviewer" ng-hide="subObject.reviewID">
+                                    <select class="form-control" ng-model="reviewer" ng-hide="subObject.reviewID" ng-disabled="Status=='Ended'">
                                         <option ng-repeat="auth in authors track by $index " ng-show="reviewerFilter(auth.email,subObject.submittedBy.email)" >{{auth.email}}</option>
                                     </select>
 
@@ -168,7 +168,7 @@
                                             </div>
                                         </div>
                                 </td>
-                                <td><button ng-hide="subObject.reviewID" class="btn btn-xs btn-success" ng-click="assign(reviewer,value.getId(subObject))">Assign</button> <p style="color:green;font-size: 13px;font-weight: 700" ng-show="subObject.reviewID">ASSIGNED</p></td>
+                                <td><button ng-hide="subObject.reviewID || Status!='Review Stage'" class="btn btn-xs btn-success" ng-click="assign(reviewer,value.getId(subObject))">Assign</button> <p style="color:green;font-size: 13px;font-weight: 700" ng-show="subObject.reviewID">ASSIGNED</p><p><p style="color:red;font-size: 13px;font-weight: 700 " ng-show="!subObject.reviewID && Status=='Ended'">NOT ASSIGNED</p></p></td>
                             </tr>
 
 

@@ -2,18 +2,19 @@ angular.module('ConfServiceModule',[]).factory('ConfService',['$http',function($
 
 
     return {
-       /* FetchChairPersons: function () {
-            return $http.get("/priv/getChair",
-                {});
-        },*/
         CreateConference: function (object) {
             return $http.post("/conf/createConf", object
             );
         },
 
-        ListConference: function () {
-            return $http.get("/conf/allconferences",
+        ListConferenceNormal: function () {
+            return $http.get("/conf/allconferences/normal",
                 {});
+
+        },
+        ListConferenceChair: function (id) {
+            return $http.get("/conf/allconferences/chair",{params:{userId:id}}
+                );
 
         },
         Join: function (userId, confId) {
