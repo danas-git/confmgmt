@@ -1,17 +1,5 @@
-angular.module('ConfControllerModule',[]).controller('ConfController',function($scope,ConfService,$location,$state,$rootScope,userService){
+angular.module('ConfControllerModule',[]).controller('ConfController',function($scope,ConfService,$location,$state,$rootScope){
     console.log("ConfController");
-   // $scope.chairOption={};
-   /* createConfService.FetchChairPersons().then(function(chairPersons){
-        console.log(chairPersons);
-        $scope.chair=[];
-        angular.forEach(chairPersons.data,function(type,index){
-            angular.forEach(type,function(value,index){
-                $scope.chair.push(value)
-            })
-        });
-        console.log($scope.chair);
-    });*/
-
     //$scope.chairMemberList = "";
     /*var submissionDate = document.getElementById('submissionDate');
     var reviewDate = document.getElementById('reviewDate');
@@ -25,14 +13,9 @@ angular.module('ConfControllerModule',[]).controller('ConfController',function($
     },false);*/
 
     $scope.createConference= function () {
-        id=$rootScope.user._id;
+        var id=$rootScope.user._id;
         $scope.conference={createdBy:id,conferenceTitle:$scope.conferenceName, conferenceDescription:$scope.conferenceDescription,
             submissionEndDate:$scope.submissionDeadline,reviewEndDate:$scope.reviewDeadline,department:$scope.department};
-            //console.log($scope.conference);
-      /*  for(var i=0;i<$scope.chairMemberList.length;i++)
-        {
-            console.log($scope.chairMemberList[i].email);
-        }*/
         ConfService.CreateConference($scope.conference).then(function(message){
             console.log(message.data.message);
             $scope.message2=message.data.message;

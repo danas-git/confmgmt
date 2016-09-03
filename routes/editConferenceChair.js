@@ -17,6 +17,8 @@ function isAuthenticated (req, res, next) {
 }
 router.use('/getAuthors', isAuthenticated);
 router.use('/assignReviewer', isAuthenticated);
+router.use('/updateDate', isAuthenticated);
+router.use('/close', isAuthenticated);
 
 router.route('/getAuthors')
     .get(function(req,res){
@@ -33,6 +35,64 @@ router.route('/getAuthors')
                 })
     });
 
+router.route('/updateDate/submission')
+    .post(function(req,res) {
+        console.log(req.body.subDate);
+        console.log(req.body.confId);
+        Conference.update({'_id': req.body.confId}, {$set: {'submissionEndDate': req.body.subDate}}, function (err, body) {
+            if (err) {
+                console.log("some error while updating submission end date");
+            }
+            if(body) {
+                res.send({message: "submission deadline updated"});
+            }
+
+        })
+    });
+
+router.route('/updateDate/review')
+    .post(function(req,res) {
+        console.log(req.body.revDate);
+        console.log(req.body.confId);
+        Conference.update({'_id': req.body.confId}, {$set: {'reviewEndDate': req.body.revDate}}, function (err, body) {
+            if (err) {
+                console.log("some error while updating submission end date");
+            }
+            if(body) {
+                res.send({message: "review deadline updated"});
+            }
+
+        })
+    });
+
+router.route('/close/submission')
+    .post(function(req,res) {
+ var date= new Date();
+        var currentDate=date.toJSON();
+        console.log(req.body.confId);
+        Conference.update({'_id':req.body.confId},{$set:{'submissionEndDate':currentDate}}, function(err,body){
+            if (err) {
+                console.log("some error while closing submission");
+            }
+            if(body) {
+                res.send({message: "submission successfully closed"});
+            }
+        })
+    });
+router.route('/close/review')
+    .post(function(req,res) {
+        var date= new Date();
+        var currentDate=date.toJSON();
+        console.log(req.body.confId);
+        Conference.update({'_id':req.body.confId},{$set:{'reviewEndDate':currentDate}}, function(err,body){
+            if (err) {
+                console.log("some error while closing review");
+            }
+            if(body) {
+                res.send({message: "review successfully closed"});
+            }
+        })
+    });
 
 router.route('/assignReviewer')
     .post(function(req,res){
@@ -81,9 +141,6 @@ router.route('/assignReviewer')
             }
             else return res.send({message: "review ended"})
         })
-
-
-
     });
 
 module.exports = router;

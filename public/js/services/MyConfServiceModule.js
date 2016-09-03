@@ -17,6 +17,32 @@ angular.module('MyConfServiceModule',[]).factory('MyConfService',['$http',functi
                     subId:subId,
                     reviewerId:reviewerId
                 });
+        },
+        updateSubmissionDate: function(submissionDate,confId){
+            return $http.post('/editConf/updateDate/submission',
+                {subDate:submissionDate,
+                confId:confId}
+            );
+        },
+        updateReviewDate: function(reviewDate,confId){
+            return $http.post('/editConf/updateDate/review',
+                {revDate:reviewDate,
+                    confId:confId}
+            );
+        },
+        closeSubmission: function(confId){
+            return $http.post('/editConf/close/submission',
+                {
+                    confId:confId
+                }
+            );
+        },
+        closeReview: function(confId){
+            return $http.post('/editConf/close/review',
+                {
+                    confId:confId
+                }
+            );
         }
     };
 }]);
