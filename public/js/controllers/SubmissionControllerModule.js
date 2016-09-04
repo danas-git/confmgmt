@@ -5,6 +5,15 @@ angular.module('SubmissionControllerModule',['ngFileUpload']).controller('Submis
     $scope.enddateover=false;
     $scope.submitted=false;
     $scope.sub={};
+    $scope.review={};
+    $scope.review.reviewStatus="incomplete";
+    $scope.review.reviewerExpertise="";
+    $scope.review.summary="";
+    $scope.review.strongPoints="";
+    $scope.review.weakPoints="";
+    $scope.review.comments="";
+    $scope.review.overallEvaluation="Not Evaluated";
+
    // var conference = $stateParams.selectedconf;
    console.log($stateParams.confId);
 
@@ -14,6 +23,7 @@ angular.module('SubmissionControllerModule',['ngFileUpload']).controller('Submis
         $scope.coauthors=$scope.conference.conferenceMembers;
         submissionService.getoldinfo($scope.conference,$rootScope.user).then(function(datafromserver){
                                 console.log(datafromserver.data);
+                                console.log("inside then getoldinfo");
                                 $scope.sub=datafromserver.data;
                                 if($scope.sub.uploadStatus=="complete"){
                                     $scope.previousdoc=true;
@@ -23,6 +33,10 @@ angular.module('SubmissionControllerModule',['ngFileUpload']).controller('Submis
                                     $scope.submitted=true;
                                 }else if(datafromserver.data.submissionStatus=="incomplete" ||datafromserver.data.submissionStatus=="closed"){
                                     $scope.submitted=false;
+                                }
+                                if(datafromserver.data.reviewID){
+                                    console.log("old data available ");
+                                    $scope.review=datafromserver.data.reviewID;
                                 }
             });
 

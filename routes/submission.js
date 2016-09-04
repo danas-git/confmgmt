@@ -61,7 +61,7 @@ router.route('/getConfObject')
 
 router.route('/getoldinfo')
     .post(function(req,res) {
-        Submission.findOne({'submittedBy':req.body.user._id,'confID':req.body.conference._id},function(err,data1){
+        Submission.findOne({'submittedBy':req.body.user._id,'confID':req.body.conference._id}).populate({path:'reviewID',model:'Review'}).exec(function(err,data1){
             if (data1) {
                 res.json(data1);
             }

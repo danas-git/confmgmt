@@ -45,29 +45,32 @@
                     <strong><div>{{message}}</div></strong>
                     <strong><div>{{progress}}</div></strong>
 
-                    <div class="col-lg-2 col-lg-offset-10 form-group">
+                    <div class="col-lg-2 col-lg-offset-10 col-sm-4 col-xs-6 form-group">
                         <button class="btn btn-sm btn-success btn-block" ng-disabled="enddateover || submitted" type="submit">Submit</button>
                     </div>
                 </form>
                 <div class="row">
-                    <div class="col-lg-2">
+                    <div class="col-lg-2 col-sm-4 col-xs-6">
                         <button class="btn btn-sm btn-success btn-block" ng-disabled="enddateover || submitted" ng-click="saveSubmission()">Save</button>
                     </div>
-                    <div class="col-lg-2">
+                    <div class="col-lg-2 col-sm-4 col-xs-6">
                         <button class="btn btn-sm btn-success btn-block"  ng-disabled="enddateover || !submitted" ng-click="withdrawSubmission()">Withdraw</button>
                     </div>
 
                 </div>
-
+                <br>
                 <div>
-                    <h4>Review Details</h4>
+                    <h4><strong>Review Details</strong></h4>
                 </div>
                 <div>
-                    <p><strong>Review Status:</strong> Unassigned</p>
-                    <p><strong>Reviewed Date:</strong> Review not done</p>
+                    <p><strong>Review Status:</strong> {{review.reviewStatus}}</p>
+                    <p><strong>Reviewer Expertise:</strong> {{review.reviewerExpertise}}</p>
+                    <p><strong>Summary:</strong> {{review.summary}}</p>
+                    <p><strong>Strong Points:</strong> {{review.strongPoints}}</p>
+                    <p><strong>Weak Points:</strong> {{review.weakPoints}}</p>
                     <p><strong>Review Deadline:</strong> {{conference.reviewEndDate|date: 'dd-MM-yyyy'}}</p>
-                    <p><strong>Feedback:</strong> Review not done</p>
-                    <p><strong>Rating:</strong> Review not done</p>
+                    <p><strong>Comments:</strong> {{review.comments}}</p>
+                    <p><strong>Overall Evaluation:</strong> {{review.overallEvaluation}}</p>
 
                     <!-- /.table-responsive -->
                 </div>
