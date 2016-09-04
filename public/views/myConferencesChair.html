@@ -24,7 +24,7 @@
                             <td>{{ x.conferenceTitle }}</a></td>
                             <td>{{ x.department }}</td>
                             <td>{{ x.conferenceDescription }}</td>
-                            <td>{{ x.submissionEndDate |date: 'dd-MM-yyyy' }}</td>
+                            <td>{{ x.submissionEndDate |date:"medium" }}</td>
                             <td td class="center">
                                 <a ui-sref="home.myConfChair({confId:value.getId(x)})">View</a>
                             </td>

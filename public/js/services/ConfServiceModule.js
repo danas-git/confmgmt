@@ -14,7 +14,7 @@ angular.module('ConfServiceModule',[]).factory('ConfService',['$http',function($
         },
         ListConferenceChair: function (id) {
             return $http.get("/conf/allconferences/chair",{params:{userId:id}}
-                );
+            );
 
         },
         Join: function (userId, confId) {
