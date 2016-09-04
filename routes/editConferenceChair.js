@@ -116,6 +116,7 @@ router.route('/assignReviewer')
                 newReview.reviewStatus="incomplete";
                 newReview.submissionID=req.body.subId;
                 newReview.reviewerID=req.body.reviewerId;
+                newReview.conferenceID=req.body.confId;
                 newReview.save(function(err,revObject) {
                     if (err){
                         console.log('Error in creating Review: '+err);

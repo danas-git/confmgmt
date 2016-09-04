@@ -52,7 +52,8 @@ var reviewSchema = new mongoose.Schema({
     comments: String,
     reviewStatus:{type:String,enum: ['complete','incomplete']},
     submissionID:{type:Schema.Types.ObjectId,ref:'Submission'},
-    reviewerID: {type:Schema.Types.ObjectId,ref:'User'}
+    reviewerID: {type:Schema.Types.ObjectId,ref:'User'},
+    conferenceID:{type:Schema.Types.ObjectId,ref:'Conference'}
 });
 
 mongoose.model('User', userSchema);
