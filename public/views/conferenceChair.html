@@ -25,7 +25,7 @@
                     <div class="form-group">
                        <strong>SUBMISSIONS</strong>
                     </div>
-                    <button class="btn btn-success btn-sm pull-right">Auto Assign</button>
+                    <button class="btn btn-success btn-sm pull-right" ng-hide="Status=='Ended'" ng-click="autoAssign()">Auto Assign</button>
                 </form>
                 <br>
                 <div class="table-responsive">
@@ -117,10 +117,10 @@
                                     </div>
                                 </td>
 
-                                <td><button class="btn btn-xs btn-info ">Download</button></td>
+                                <td><button class="btn btn-xs btn-info "><a style="text-decoration:none;color:white" target="_blank" ng-href="/uploads/{{ value.getId(subObject)}}.pdf">Download</a></button></td>
 
                                 <td>
-                                    <select class="form-control" ng-model="reviewer" ng-hide="subObject.reviewID" ng-disabled="Status=='Ended'">
+                                    <select class="form-control" ng-model="formData.email[subObject.submittedBy.email]" ng-hide="subObject.reviewID" ng-disabled="Status=='Ended'">
                                         <option ng-repeat="auth in authors track by $index " ng-show="reviewerFilter(auth.email,subObject.submittedBy.email)" >{{auth.email}}</option>
                                     </select>
 
@@ -168,7 +168,7 @@
                                             </div>
                                         </div>
                                 </td>
-                                <td><button ng-hide="subObject.reviewID || Status!='Review Stage'" class="btn btn-xs btn-success" ng-click="assign(reviewer,value.getId(subObject))">Assign</button> <p style="color:green;font-size: 13px;font-weight: 700" ng-show="subObject.reviewID">ASSIGNED</p><p><p style="color:red;font-size: 13px;font-weight: 700 " ng-show="!subObject.reviewID && Status=='Ended'">NOT ASSIGNED</p></p></td>
+                                <td><button ng-hide="subObject.reviewID || Status=='Ended'" class="btn btn-xs btn-success" ng-click="assign(formData.email[subObject.submittedBy.email],value.getId(subObject))">Assign</button> <p style="color:green;font-size: 13px;font-weight: 700" ng-show="subObject.reviewID">ASSIGNED</p><p><p style="color:red;font-size: 13px;font-weight: 700 " ng-show="!subObject.reviewID && Status=='Ended'">NOT ASSIGNED</p></p></td>
                             </tr>
 
 
@@ -244,7 +244,7 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td colspan="3"><button class="btn btn-xs btn-info">Download</button></td>
+                                <td colspan="3"><button class="btn btn-xs btn-info"><a style="text-decoration:none;color:white" target="_blank" ng-href="/uploads/{{ value.getId(subObject)}}.pdf">Download</a></button></td>
                             </tr>
                         </tbody>
                     </table>

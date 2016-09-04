@@ -29,7 +29,7 @@ app.use(session(sessionOptions));
 var mongoose = require('mongoose');
 mongoose.connect("mongodb://localhost:27017/MyCMS");
 
-
+var fs = require('fs');
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -50,6 +50,18 @@ var initPassport = require('./passport-init');
 initPassport(passport);
 //app.use('/', routes);
 //app.use('/users', users);
+
+app.get('/uploads/*', function(req, res){
+  var filename = __dirname+req.url;
+  var readStream = fs.createReadStream(filename);
+
+  readStream.on('open', function () {
+    readStream.pipe(res);
+  });
+  readStream.on('error', function(err) {
+    res.end(err);
+  });
+});
 
 app.use('/',index);
 app.use('/users', authenticate);

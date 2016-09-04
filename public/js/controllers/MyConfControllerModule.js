@@ -5,6 +5,8 @@ angular.module('MyConfControllerModule',[]).controller('MyConfController',functi
     $scope.Status="";
     $scope.messageSubDate="";
     $scope.messageReviewDate="";
+    $scope.users=[];
+    $scope.formData = {email: {}};
     $scope.currentConferenceId = $stateParams.confId;
     console.log($scope.currentConferenceId);
 
@@ -12,6 +14,13 @@ angular.module('MyConfControllerModule',[]).controller('MyConfController',functi
         $scope.bigData=conf.data;
         console.log($scope.bigData);
         $scope.setStatus();
+        angular.forEach($scope.bigData,function(data1,index){
+            angular.forEach(data1.conferenceSubmissions,function(data2,index){
+                if(data2.submissionStatus=="complete"){
+                    $scope.users.push(data2.submittedBy.email);
+                }
+            })
+        });
     });
 
     $scope.setStatus = function(){
@@ -79,13 +88,37 @@ angular.module('MyConfControllerModule',[]).controller('MyConfController',functi
         return (auth!= email );
     };
 
+    $scope.autoAssign=function(){
+        $scope.users=[];
+        angular.forEach($scope.bigData,function(data1,index){
+          angular.forEach(data1.conferenceSubmissions,function(data2,index){
+              if(data2.submissionStatus=="complete"){
+                  $scope.users.push(data2.submittedBy.email);
+              }
+          })
+        });
+        var randomNumber=$scope.random(1,$scope.users.length);
+        for(var i=0;i<$scope.users.length;i++) {
+            var position=(i+randomNumber)%$scope.users.length;
+            $scope.formData.email[$scope.users[i]]=$scope.users[position];
+        }
+    };
+    //this function generates a random value; used in auto assign algo
+    $scope.random=function getRandomInt(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min)) + min;
+    };
+
     $scope.assign= function(reviewer,subId){
         //is to get Id associated with author email.
+
+        console.log(reviewer);
+        console.log(subId);
+
         angular.forEach($scope.authors,function(author,index){
             if(author.email==reviewer){
-                console.log(author);
                 $scope.reviewerId=author._id;
-                console.log($scope.reviewerId);
                 console.log("Success");
                 }
         });
