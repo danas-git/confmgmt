@@ -100,6 +100,14 @@ angular.module('appRoutes',['ui.router']).config(['$stateProvider','$urlRouterPr
                 logincheck: checkLoggedin
             }
         })
+        .state('home.reviewdoc', {
+            url: "/review/:confId",
+            templateUrl: 'views/reviewNormalUser.html',
+            controller: 'ReviewController',
+            resolve:{
+                logincheck: checkLoggedin
+            }
+        })
         .state('home.welcome', {
             url: "/",
             templateUrl: 'views/welcome_nested.html'

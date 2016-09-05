@@ -97,10 +97,12 @@ angular.module('MyConfControllerModule',[]).controller('MyConfController',functi
               }
           })
         });
+        if($scope.users.length!=1){
         var randomNumber=$scope.random(1,$scope.users.length);
         for(var i=0;i<$scope.users.length;i++) {
             var position=(i+randomNumber)%$scope.users.length;
             $scope.formData.email[$scope.users[i]]=$scope.users[position];
+        }
         }
     };
     //this function generates a random value; used in auto assign algo

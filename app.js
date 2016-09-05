@@ -15,6 +15,7 @@ var profile = require('./routes/profile');
 var conference = require('./routes/conference');
 var submission = require('./routes/submission');
 var editConferenceChair = require('./routes/editConferenceChair');
+var review = require('./routes/review');
 
 
 var app = express();
@@ -70,6 +71,7 @@ app.use('/profile',profile);
 app.use('/conf',conference);
 app.use('/submission',submission);
 app.use('/editConf',editConferenceChair);
+app.use('/review',review);
 
 
 // catch 404 and forward to error handler
