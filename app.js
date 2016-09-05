@@ -60,7 +60,7 @@ app.get('/uploads/*', function(req, res){
     readStream.pipe(res);
   });
   readStream.on('error', function(err) {
-    res.end(err);
+    res.status(500).send("<html><body><h1>No Submission made by the user</h1></body></html>");
   });
 });
 

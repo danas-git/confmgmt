@@ -25,7 +25,7 @@ router.use('/addReview',isAuthenticated);
 router.route('/getDetails')
     .get(function(req,res) {
         console.log(req.param('condId'));
-        Review.findOne({'conferenceID':req.param('confId'),'reviewerID':req.param('userId')}).populate({path:'submissionID',model:'Submission'}).exec(function(err,data1){
+        Review.findOne({'conferenceID':req.param('confId'),'reviewerID':req.param('userId')}).populate({path:'submissionID conferenceID'}).exec(function(err,data1){
             if (data1) {
                 res.json(data1);
             }else{
@@ -40,8 +40,6 @@ router.route('/addReview')
     .post(function(req,res) {
         var currentDate=new Date();
         var currDate=currentDate.toJSON();
-        console.log(req.body.review);
-        console.log(currDate);
 
         Conference.find({'_id':req.body.conferenceID,'reviewEndDate':{$gte:currDate},'submissionEndData':{$lte:currDate}},function(err,data){
             if(data){
