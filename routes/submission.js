@@ -72,25 +72,14 @@ router.route('/getoldinfo')
     .post(function(req,res) {
         Submission.findOne({'submittedBy':req.body.user._id,'confID':req.body.conference._id}).populate({path:'reviewID',model:'Review'}).exec(function(err,data1){
             if (data1) {
-                /*if(data1.submissionStatus =='complete') {
-                    console.log("inside updated submission getold");
-                    var mail = {
-                        from: "teamninetk@gmail.com",
-                        to: req.body.user.email,
-                        subject: "TK Project Submission Status",
-                        html: "Hello User, You have successfully submitted the paper for review."
-                    }
-                    smtpTransport.sendMail(mail, function (error, response) {
-                        console.log("Inside send mail.");
-                        if (error) {
-                            console.log(error);
-                        } else {
-                            console.log("Message sent: " + response.message);
-                        }
-
-                    });
-                }*/
                 res.json(data1);
+            }else{
+                Submission.findOne({'coAuthors':req.body.user._id,'confID':req.body.conference._id}).populate({path:'reviewID',model:'Review'}).exec(function(err,data1){
+                    if (data1) {
+                        res.json(data1);
+                    }
+
+                });
             }
         });
     });

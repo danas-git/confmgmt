@@ -4,7 +4,9 @@ angular.module('SubmissionControllerModule',['ngFileUpload']).controller('Submis
     $scope.alreadysubmitted=false;
     $scope.enddateover=false;
     $scope.submitted=false;
+    $scope.notauthor=false;
     $scope.sub={};
+    $scope.sub.submissionStatus="Not Submitted";
     $scope.review={};
     $scope.review.reviewStatus="incomplete";
     $scope.review.reviewerExpertise="";
@@ -24,20 +26,27 @@ angular.module('SubmissionControllerModule',['ngFileUpload']).controller('Submis
         submissionService.getoldinfo($scope.conference,$rootScope.user).then(function(datafromserver){
                                 console.log(datafromserver.data);
                                 console.log("inside then getoldinfo");
-                                $scope.sub=datafromserver.data;
-                                if($scope.sub.uploadStatus=="complete"){
-                                    $scope.previousdoc=true;
+                                if(datafromserver.data && datafromserver.data!=null){
+                                    console.log(datafromserver.data);
+                                    $scope.sub=datafromserver.data;
+                                                                    if($scope.sub.uploadStatus=="complete"){
+                                                                        $scope.previousdoc=true;
+                                                                    }
+                                                                    if($scope.sub.submittedBy!=$rootScope.user._id){
+                                                                        $scope.notauthor=true;
+                                                                    }
+
+                                                                    if(datafromserver.data.submissionStatus=="complete"){
+                                                                        $scope.submitted=true;
+                                                                    }else if(datafromserver.data.submissionStatus=="incomplete" ||datafromserver.data.submissionStatus=="closed"){
+                                                                        $scope.submitted=false;
+                                                                    }
+                                                                    if(datafromserver.data.reviewID){
+                                                                        console.log("old data available ");
+                                                                        $scope.review=datafromserver.data.reviewID;
+                                                                    }
                                 }
 
-                                if(datafromserver.data.submissionStatus=="complete"){
-                                    $scope.submitted=true;
-                                }else if(datafromserver.data.submissionStatus=="incomplete" ||datafromserver.data.submissionStatus=="closed"){
-                                    $scope.submitted=false;
-                                }
-                                if(datafromserver.data.reviewID){
-                                    console.log("old data available ");
-                                    $scope.review=datafromserver.data.reviewID;
-                                }
             });
 
         var subenddate = new Date($scope.conference.submissionEndDate);
@@ -90,24 +99,25 @@ angular.module('SubmissionControllerModule',['ngFileUpload']).controller('Submis
                         console.log("returned after updating info");
                         $scope.message="Saved Successfully";
                         $scope.progress="";
+                        if ($scope.sub.uploadFile) {
+                                    Upload.upload({
+                                                                           url: 'submission/upload',
+                                                                           data: {file: $scope.sub.uploadFile}
+                                                                               }).then(function (resp) {
+                                                                                 console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
+
+
+                                                                                }, function (resp) {
+                                                                                console.log('Error status: ' + resp.status);
+                                                                                }, function (evt) {
+                                                                                var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                                                                                $scope.progress='Upload: ' + progressPercentage + '% ';
+                                                                                console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+                                     });
+                                }
         });
 
-        if ($scope.sub.uploadFile) {
-            Upload.upload({
-                                                   url: 'submission/upload',
-                                                   data: {file: $scope.sub.uploadFile}
-                                                       }).then(function (resp) {
-                                                         console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
 
-
-                                                        }, function (resp) {
-                                                        console.log('Error status: ' + resp.status);
-                                                        }, function (evt) {
-                                                        var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-                                                        $scope.progress='Upload: ' + progressPercentage + '% ';
-                                                        console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
-             });
-        }
 
 
 
