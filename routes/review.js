@@ -1,0 +1,142 @@
+var express = require('express');
+var router = express.Router();
+var mongoose = require( 'mongoose' );
+var User = mongoose.model('User');
+var Conference = mongoose.model('Conference');
+var Review = mongoose.model('Review');
+var Submission = mongoose.model('Submission');
+
+
+//Used for routes that must be authenticated.
+function isAuthenticated (req, res, next) {
+    // if user is authenticated in the session, call the next() to call the next request handler
+    // Passport adds this method to request object. A middleware is allowed to add properties to
+    // request and response objects
+    if (req.isAuthenticated()){
+        return next();
+    }
+    res.send('401');
+}
+
+router.use('/getDetails', isAuthenticated);
+router.use('/addReview',isAuthenticated);
+router.use('/getReviewStatusByConferenceId',isAuthenticated);
+
+
+router.route('/getDetails')
+    .get(function(req,res) {
+        console.log(req.param('condId'));
+        Review.findOne({'conferenceID':req.param('confId'),'reviewerID':req.param('userId')}).populate({path:'submissionID',model:'Submission'}).exec(function(err,data1){
+            if (data1) {
+                res.json(data1);
+            }else{
+                res.send("notassigned");
+            }
+        });
+    });
+
+
+
+router.route('/addReview')
+    .post(function(req,res) {
+        var currentDate=new Date();
+        var currDate=currentDate.toJSON();
+        console.log(req.body.review);
+        console.log(currDate);
+
+        Conference.find({'_id':req.body.conferenceID,'reviewEndDate':{$gte:currDate},'submissionEndData':{$lte:currDate}},function(err,data){
+            if(data){
+                Review.update({'conferenceID':req.body.review.conferenceID,'submissionID':req.body.review.subId},{$set:{
+                    reviewerExpertise:req.body.review.reviewerExpertise,
+                    comments:req.body.review.comments,
+                    summary:req.body.review.summary,
+                    strongPoints:req.body.review.strongPoints,
+                    weakPoints: req.body.review.weakPoints,
+                    reviewStatus:"complete",
+                    overallEvaluation:req.body.review.overallEvaluation
+                }},function(err,data){
+                    if(data){
+                        console.log("updating");
+
+                        if(data1.submissionStatus =='complete') {
+                            console.log("inside updated submission");
+                            var mail = {
+                                from: "teamninetk@gmail.com",
+                                to: req.body.user.email,
+                                subject: "TK Project Submission Status",
+                                html: "Hello User, You have successfully re-submitted the paper for review."
+                            }
+                            smtpTransport.sendMail(mail, function (error, response) {
+                                console.log("Inside send mail.");
+                                if (error) {
+                                    console.log(error);
+                                } else {
+                                    console.log("Message sent: " + response.message);
+                                }
+
+                            });
+                        }
+
+                        res.send(data)}
+                    if(err){res.send.err}
+                });
+
+            }
+            else res.send("no conf exist");
+        });
+       /* Conference.findOne({'_id':req.body.review.conferenceID,submissionEndDate: {$lte: currDate}},function(err,data){
+            if(data){
+                console.log("add review");
+                console.log(data);
+                Conference.findOne({'_id':req.body.review.conferenceID,reviewEndDate: {$gte: currDate}},function(err,data2){
+                   if(data2) {
+                        Review.update({'submissionID':req.body.review.subId},req.body.review,function(err,body){
+                        if(err){
+                        console.log("error on review update"+err);
+                        }
+                        else{
+                        res.json(body);
+                        }
+                        });
+                        }else{
+                        res.send("reviewperiodover")
+                        }
+                })  ;
+
+            }else{
+                res.send("reviewnotstarted")
+            }
+        });*/
+    });
+
+
+router.route('/getReviewStatusByConferenceId')
+    .post(function(req,res) {
+        console.log(req.param('conferenceId'));
+        Review.find({conferenceID:req.param('conferenceID')},function (error,reviewList) {
+            var strongaccept=0,accept=0,borderline=0,reject=0,strongreject=0,NotEvaluated=0;
+            if(reviewList){
+                for(var i=0;i<reviewList.length;i++){
+                    if(reviewList[i].overallEvaluation=="strongaccept")
+                        strongaccept++;
+                    else if(reviewList[i].overallEvaluation=="accept")
+                        accept++;
+                    else if(reviewList[i].overallEvaluation=="borderline")
+                        borderline++;
+                    else if(reviewList[i].overallEvaluation=="reject")
+                        reject++;
+                    else if(reviewList[i].overallEvaluation=="strongreject")
+                        strongreject++;
+                    else NotEvaluated++;
+
+                }
+                res.send({strongaccept:strongaccept,accept:accept,borderline:borderline,reject:reject,strongreject:strongreject,notevaluated:NotEvaluated});
+            }else{
+                res.send([]);
+            }
+
+        })
+    });
+
+
+module.exports = router;

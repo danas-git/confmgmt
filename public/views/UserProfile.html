@@ -1,0 +1,46 @@
+ <div class="row">
+            <div>
+                <div class="panel-heading">
+                    <h3 class="panel-title">Edit User Information</h3>
+                </div>
+                <div class="panel-body">
+                    <form role="form" ng-submit="EditUser()">
+                        <fieldset>
+                            <div  class="form-group">
+                                First Name*: <input class="form-control" type="text" ng-model="user.firstName" placeholder="Firstname" autofocus>
+                            </div>
+                            <div>
+                                Last name*: <input class="form-control" placeholder="Lastname" ng-model="user.lastName"  type="text" autofocus>
+                            </div>
+                            <!-- <div  class="form-group">
+                                 Email*: <input class="form-control" placeholder="Email" ng-model="email" type="email" autofocus></div>
+                             <div  class="form-group">
+                                 Password*: <input class="form-control" placeholder="Password" ng-model="password"  type="password" autofocus>
+                             </div>
+                             <div  class="form-group">
+                                 Confirm Password*: <input class="form-control" placeholder="Confirm Password" ng-model="confirmpassword"  type="password"  autofocus>
+                             </div>
+                             <div class="form-group">
+                                 Postal Address: <input class="form-control" placeholder="Postal Address" ng-model="postaladdress" type="text" autofocus>
+                             </div>-->
+                            <div  class="form-group">
+                                Institution*: <input class="form-control" placeholder="Institution" ng-model="user.institution" type="text" autofocus>
+                            </div>
+                            <div  class="form-group">
+                                City: <input class="form-control" placeholder="City" ng-model="user.city" type="text" autofocus>
+                            </div>
+                            <div  class="form-group">
+                                State: <input class="form-control" placeholder="State" ng-model="user.state" type="text"  autofocus>
+                            </div>
+                            <div  class="form-group">
+                                Country: <input class="form-control" placeholder="Country" ng-model="user.country" type="text"  autofocus>
+                            </div>
+
+                            <button class="btn btn-lg btn-success btn-block" ng-click= "saveUserInfo()" type="submit">Edit & Save</button>
+                        </fieldset>
+                    </form>
+
+                </div>
+            </div>
+    </div>
+
