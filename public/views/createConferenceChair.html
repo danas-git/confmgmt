@@ -20,7 +20,7 @@
                                 <span><strong>Submission Deadline:</strong><input class="form-control" type="date" placeholder="yyyy-MM-dd" ng-model="submissionDeadline" ng-required="true" id="submissionDate" name="date" min></span>
                             </div>
                             <div  class="form-group">
-                                <span><strong>Review Deadline:</strong><input class="form-control" type="date" value="21-02-2016" id="reviewDate" ng-required="true" ng-model="reviewDeadline" name="date"></span>
+                                <span><strong>Review Deadline:</strong><input class="form-control" type="date" value="21-02-2016" min="{{submissionDeadline}}" id="reviewDate" ng-required="true" ng-model="reviewDeadline" name="date"></span>
                             </div>
                             <div  class="form-group">
                                 <strong>Department*:</strong><input class="form-control" type="text" ng-model="department" ng-required="true" placeholder="Department Name" autofocus>

@@ -206,18 +206,25 @@ router.route('/getAllSubmissionCountByConferenceId')
     .post(function(req,res) {
         console.log(" Inside getAllSubmissionCountByConferenceId!!!")
         Submission.find({'confID':req.body.conferenceId},function(err,submissionList){
-            var completeCount=0,incompleteCount=0;
+            var completeCount=0,incompleteCount=0,acceptedCount=0,rejectedCount=0,closedCount=0;
             console.log(submissionList);
             if (submissionList) {
                 for(var i=0;i<submissionList.length;i++){
                     if(submissionList[i].submissionStatus=="complete"){
                         completeCount++;
-                    }else{
+                    }else if(submissionList[i].submissionStatus=="accepted"){
+                        acceptedCount++;
+                    }else if(submissionList[i].submissionStatus=="rejected"){
+                        rejectedCount++;
+                    }else if(submissionList[i].submissionStatus=="closed"){
+                        closedCount++;
+                    }
+                    else{
                         incompleteCount++;
                     }
                 }
 
-                res.send({complete :completeCount,incomplete: incompleteCount});
+                res.send({complete :completeCount,incomplete: incompleteCount,accepted: acceptedCount,rejected:rejectedCount,closed:closedCount});
             }else{
                 res.send([]);
             }

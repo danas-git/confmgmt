@@ -39,7 +39,7 @@ function createSubmissionChart(dataOfConference,nameOfConference,div){
         },title: {
             text: "Submission Status of "+nameOfConference
         },xAxis: {
-            categories: ['Complete', 'Incomplete'],
+            categories: ['Complete', 'Incomplete','Accepted','Rejected','Closed'],
             title: {
                 text: null
             }
@@ -110,7 +110,7 @@ function createSubmissionChart(dataOfConference,nameOfConference,div){
                         var data=dataFrmServer.data;
                         console.log(dataFrmServer);
                         $("#submissionStatus").empty();
-                        createSubmissionChart([{y:data.complete,color:"#33cc33"},{y:data.incomplete,color:"#ff0000"}],seriesName,"submissionStatus");
+                        createSubmissionChart([{y:data.complete,color:"#33cc33"},{y:data.incomplete,color:"#ff0000"},{y:data.accepted,color:"#ccff66"},{y:data.rejected,color: "#000000"},{y:data.closed}],seriesName,"submissionStatus");
 
                     });
 
@@ -118,7 +118,7 @@ function createSubmissionChart(dataOfConference,nameOfConference,div){
                         console.log(dataFrmServer);
                         var data=dataFrmServer.data;
                         $("#reviewStatus").empty();
-                        createReviewChart([{y:data.strongaccept},{y:data.accept},{y:data.borderline},{y:data.reject},{y:data.strongreject},{y:data.notevaluated}],seriesName,"reviewStatus")
+                        createReviewChart([{y:data.strongaccept,color:"#00cc00"},{y:data.accept,color:"#99ff66"},{y:data.borderline,color:"#ffff00"},{y:data.reject,color:"#ff5c33"},{y:data.strongreject,color:"#ff0000"},{y:data.notevaluated,color:"#999966"}],seriesName,"reviewStatus")
                     });
 
 

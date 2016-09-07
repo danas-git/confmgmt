@@ -142,8 +142,11 @@ router.route('/addReview')
 
 router.route('/getReviewStatusByConferenceId')
     .post(function(req,res) {
-        console.log(req.param('conferenceId'));
-        Review.find({conferenceID:req.param('conferenceID')},function (error,reviewList) {
+        console.log("Conference id is :::::::::::::::::"+req.param('conferenceId'));
+        Review.find({"conferenceID":req.param('conferenceId')},function (error,reviewList) {
+            console.log("*******************");
+            console.log(reviewList);
+            console.log("*******************");
             var strongaccept=0,accept=0,borderline=0,reject=0,strongreject=0,NotEvaluated=0;
             if(reviewList){
                 for(var i=0;i<reviewList.length;i++){
