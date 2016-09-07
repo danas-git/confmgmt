@@ -5,6 +5,14 @@ var User = mongoose.model('User');
 var Conference = mongoose.model('Conference');
 var Submission = mongoose.model('Submission');
 var Review = mongoose.model('Review');
+var nodemailer = require('nodemailer');
+var smtpTransport = nodemailer.createTransport("SMTP", {
+    service: "Gmail",
+    auth: {
+        user: "teamninetk@gmail.com",
+        pass: "admin123!"
+    }
+});
 //Used for routes that must be authenticated.
 function isAuthenticated (req, res, next) {
     // if user is authenticated in the session, call the next() to call the next request handler
@@ -91,6 +99,8 @@ router.route('/close/review')
                 console.log("some error while closing review");
             }
             if(body) {
+                console.log(body);
+
                 res.send({message: "review successfully closed"});
             }
         })
@@ -99,11 +109,30 @@ router.route('/close/review')
 router.route('/submission/accept')
     .post(function(req,res) {
         console.log(req.body.subId);
+        console.log(req.body.userId);
         Submission.update({'_id':req.body.subId},{$set:{'submissionStatus':"accepted"}},function(err,body){
             if (err) {
                 console.log("some error while accepting submission");
             }
             if(body) {
+
+                 console.log("inside submission accept");
+                 var mail = {
+                 from: "teamninetk@gmail.com",
+                     to: req.body.userId,
+                 subject: "TK Project Submission Status",
+                 html: "Hello User, Your submission has been accepted successfully."
+                 }
+                 smtpTransport.sendMail(mail, function (error, response) {
+                 console.log("Inside send mail.");
+                 if (error) {
+                 console.log(error);
+                 } else {
+                 console.log("Message sent: " + response.message);
+                 }
+
+                 });
+
                 res.send({message: "submission accepted successfully"});
             }
         });
@@ -111,11 +140,28 @@ router.route('/submission/accept')
 router.route('/submission/reject')
     .post(function(req,res) {
         console.log(req.body.subId);
+        console.log(req.body.userId);
         Submission.update({'_id':req.body.subId},{$set:{'submissionStatus':"rejected"}},function(err,body){
             if (err) {
                 console.log("some error while rejecting submission");
             }
             if(body) {
+                console.log("inside submission reject");
+                var mail = {
+                    from: "teamninetk@gmail.com",
+                    to: req.body.userId,
+                    subject: "TK Project Submission Status",
+                    html: "Hello User, Your submission has been rejected."
+                }
+                smtpTransport.sendMail(mail, function (error, response) {
+                    console.log("Inside send mail.");
+                    if (error) {
+                        console.log(error);
+                    } else {
+                        console.log("Message sent: " + response.message);
+                    }
+
+                });
                 res.send({message: "submission rejected successfully"});
             }
         });
@@ -123,12 +169,29 @@ router.route('/submission/reject')
 router.route('/submission/withdraw')
     .post(function(req,res) {
         console.log(req.body.subId);
+        console.log(req.body.userId);
         Submission.update({'_id':req.body.subId},{$set:{'submissionStatus':"closed"}},function(err,body){
             if (err) {
                 console.log("some error while rejecting submission");
             }
             if(body) {
-                res.send({message: "submission rejected successfully"});
+                console.log("inside submission withdraw");
+                var mail = {
+                    from: "teamninetk@gmail.com",
+                    to: req.body.userId,
+                    subject: "TK Project Submission Status",
+                    html: "Hello User, Your submission has been withdrawn."
+                }
+                smtpTransport.sendMail(mail, function (error, response) {
+                    console.log("Inside send mail.");
+                    if (error) {
+                        console.log(error);
+                    } else {
+                        console.log("Message sent: " + response.message);
+                    }
+
+                });
+                res.send({message: "submission withdrawn successfully"});
             }
         });
     });

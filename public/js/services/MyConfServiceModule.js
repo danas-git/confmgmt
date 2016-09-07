@@ -44,24 +44,27 @@ angular.module('MyConfServiceModule',[]).factory('MyConfService',['$http',functi
                 }
             );
         },
-        withdrawSubmission: function(subId){
+        withdrawSubmission: function(subId,userId){
             return $http.post('/editConf/submission/withdraw',
                 {
-                   subId:subId
+                   subId:subId,
+                    userId:userId
                 }
             );
         },
-        acceptSubmission: function(subId){
+        acceptSubmission: function(subId,userId){
             return $http.post('/editConf/submission/accept',
                 {
-                    subId:subId
+                    subId:subId,
+                    userId:userId
                 }
             );
         },
-        rejectSubmission: function(subId){
+        rejectSubmission: function(subId,userId){
             return $http.post('/editConf/submission/reject',
                 {
-                    subId:subId
+                    subId:subId,
+                    userId:userId
                 }
             );
         }

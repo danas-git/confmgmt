@@ -120,7 +120,7 @@
                                     </div>
                                 </td>
 
-                                <td><button type="button" class="btn btn-xs btn-warning" ng-click="withdrawSubmission(value.getId(subObject))">Withdraw</button></td>
+                                <td><button type="button" class="btn btn-xs btn-warning" ng-click="withdrawSubmission(value.getId(subObject),subObject.submittedBy.email)">Withdraw</button></td>
 
                                 <td>
                                     <select class="form-control" ng-model="formData.email[subObject.submittedBy.email]" ng-hide="subObject.reviewID" ng-disabled="Status=='Ended'">
@@ -172,8 +172,8 @@
                                         </div>
                                 </td>
                                 <td>
-                                    <button ng-show="subObject.reviewID && Status=='Ended' && subObject.submissionStatus!='accepted' && subObject.submissionStatus!='rejected'" type="button" class="btn btn-xs btn-success" ng-click="acceptSubmission(value.getId(subObject))">Accept</button>
-                                    <button ng-show="subObject.reviewID && Status=='Ended' && subObject.submissionStatus!='accepted' && subObject.submissionStatus!='rejected'" type="button" class="btn btn-xs btn-default" ng-click="rejectSubmission(value.getId(subObject))">Reject</button>
+                                    <button ng-show="subObject.reviewID && Status=='Ended' && subObject.submissionStatus!='accepted' && subObject.submissionStatus!='rejected'" type="button" class="btn btn-xs btn-success" ng-click="acceptSubmission(value.getId(subObject),subObject.submittedBy.email)">Accept</button>
+                                    <button ng-show="subObject.reviewID && Status=='Ended' && subObject.submissionStatus!='accepted' && subObject.submissionStatus!='rejected'" type="button" class="btn btn-xs btn-default" ng-click="rejectSubmission(value.getId(subObject),subObject.submittedBy.email)">Reject</button>
                                     <button ng-hide="subObject.reviewID || Status=='Ended'" class="btn btn-xs btn-success" ng-click="assign(formData.email[subObject.submittedBy.email],value.getId(subObject))">Assign</button> <p style="color:green;font-size: 13px;font-weight: 700" ng-show="subObject.reviewID && Status!='Ended'">ASSIGNED</p><p><p style="color:red;font-size: 13px;font-weight: 700 " ng-show="!subObject.reviewID && Status=='Ended'">NOT ASSIGNED</p></p>
                                     <p style="color:green;font-size: 13px;font-weight: 700 " ng-show="subObject.reviewID && Status=='Ended' && subObject.submissionStatus=='accepted' ">Accepted</p><p style="color:red;font-size: 13px;font-weight: 700 " ng-show="subObject.reviewID && Status=='Ended' && subObject.submissionStatus=='rejected' ">Rejected</p>
                                 </td>

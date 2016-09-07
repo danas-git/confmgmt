@@ -47,18 +47,18 @@ angular.module('MyConfControllerModule',[]).controller('MyConfController',functi
             $state.go($state.current, {}, {reload: true});
         })
     };
-    $scope.withdrawSubmission=function(subId){
-        MyConfService.withdrawSubmission(subId).then(function(Object){
+    $scope.withdrawSubmission=function(subId,userId){
+        MyConfService.withdrawSubmission(subId,userId).then(function(Object){
             $state.go($state.current, {}, {reload: true});
         })
     };
-    $scope.acceptSubmission=function(subId){
-        MyConfService.acceptSubmission(subId).then(function(Object){
+    $scope.acceptSubmission=function(subId,userId){
+        MyConfService.acceptSubmission(subId,userId).then(function(Object){
             $state.go($state.current, {}, {reload: true});
         })
     };
-    $scope.rejectSubmission=function(subId){
-         MyConfService.rejectSubmission(subId).then(function(Object){
+    $scope.rejectSubmission=function(subId,userId){
+         MyConfService.rejectSubmission(subId,userId).then(function(Object){
              console.log(Object);
              $state.go($state.current, {}, {reload: true});
          })
