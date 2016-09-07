@@ -19,6 +19,8 @@ router.use('/getAuthors', isAuthenticated);
 router.use('/assignReviewer', isAuthenticated);
 router.use('/updateDate', isAuthenticated);
 router.use('/close', isAuthenticated);
+router.use('/submission', isAuthenticated);
+
 
 router.route('/getAuthors')
     .get(function(req,res){
@@ -92,6 +94,43 @@ router.route('/close/review')
                 res.send({message: "review successfully closed"});
             }
         })
+    });
+
+router.route('/submission/accept')
+    .post(function(req,res) {
+        console.log(req.body.subId);
+        Submission.update({'_id':req.body.subId},{$set:{'submissionStatus':"accepted"}},function(err,body){
+            if (err) {
+                console.log("some error while accepting submission");
+            }
+            if(body) {
+                res.send({message: "submission accepted successfully"});
+            }
+        });
+    });
+router.route('/submission/reject')
+    .post(function(req,res) {
+        console.log(req.body.subId);
+        Submission.update({'_id':req.body.subId},{$set:{'submissionStatus':"rejected"}},function(err,body){
+            if (err) {
+                console.log("some error while rejecting submission");
+            }
+            if(body) {
+                res.send({message: "submission rejected successfully"});
+            }
+        });
+    });
+router.route('/submission/withdraw')
+    .post(function(req,res) {
+        console.log(req.body.subId);
+        Submission.update({'_id':req.body.subId},{$set:{'submissionStatus':"closed"}},function(err,body){
+            if (err) {
+                console.log("some error while rejecting submission");
+            }
+            if(body) {
+                res.send({message: "submission rejected successfully"});
+            }
+        });
     });
 
 router.route('/assignReviewer')

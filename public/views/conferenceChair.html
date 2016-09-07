@@ -35,13 +35,13 @@
                             <th>#</th>
                             <th>Submission</th>
                             <th>Author</th>
-                            <th>File</th>
+                            <th>Submission</th>
                             <th>Reviewer</th>
                             <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
-                            <tr class="odd gradeX" ng-repeat="subObject in confObject.conferenceSubmissions track by $index" ng-show="subObject.submissionStatus=='complete'">
+                            <tr class="odd gradeX" ng-repeat="subObject in confObject.conferenceSubmissions track by $index" ng-show="subObject.submissionStatus=='complete' || subObject.submissionStatus=='accepted' || subObject.submissionStatus=='rejected'">
 
                                 <td ><span class="glyphicon glyphicon-stop" style="color:lime"></span></td>
 
@@ -77,13 +77,16 @@
                                                         <dd >{{coAuth.email}}</dd>
                                                     </dl>
                                                 </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-sm btn-info" ><a style="text-decoration:none;color:white" target="_blank" ng-href="/uploads/{{ value.getId(subObject)}}.pdf">Download</a></button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </td>
 
-                                <td><p data-toggle="modal" data-target="#modal{{subObject.submittedBy.email}}"><a>{{subObject.submittedBy.email}}</a></p>
-                                    <div class="modal fade" id="modal{{subObject.submittedBy.email}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <td><p data-toggle="modal" data-target="#{{value.getId(subObject.submittedBy)}}"><a>{{subObject.submittedBy.email}}</a></p>
+                                    <div class="modal fade" id="{{value.getId(subObject.submittedBy)}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
@@ -117,7 +120,7 @@
                                     </div>
                                 </td>
 
-                                <td><button class="btn btn-xs btn-info "><a style="text-decoration:none;color:white" target="_blank" ng-href="/uploads/{{ value.getId(subObject)}}.pdf">Download</a></button></td>
+                                <td><button type="button" class="btn btn-xs btn-warning" ng-click="withdrawSubmission(value.getId(subObject))">Withdraw</button></td>
 
                                 <td>
                                     <select class="form-control" ng-model="formData.email[subObject.submittedBy.email]" ng-hide="subObject.reviewID" ng-disabled="Status=='Ended'">
@@ -168,7 +171,12 @@
                                             </div>
                                         </div>
                                 </td>
-                                <td><button ng-hide="subObject.reviewID || Status=='Ended'" class="btn btn-xs btn-success" ng-click="assign(formData.email[subObject.submittedBy.email],value.getId(subObject))">Assign</button> <p style="color:green;font-size: 13px;font-weight: 700" ng-show="subObject.reviewID">ASSIGNED</p><p><p style="color:red;font-size: 13px;font-weight: 700 " ng-show="!subObject.reviewID && Status=='Ended'">NOT ASSIGNED</p></p></td>
+                                <td>
+                                    <button ng-show="subObject.reviewID && Status=='Ended' && subObject.submissionStatus!='accepted' && subObject.submissionStatus!='rejected'" type="button" class="btn btn-xs btn-success" ng-click="acceptSubmission(value.getId(subObject))">Accept</button>
+                                    <button ng-show="subObject.reviewID && Status=='Ended' && subObject.submissionStatus!='accepted' && subObject.submissionStatus!='rejected'" type="button" class="btn btn-xs btn-default" ng-click="rejectSubmission(value.getId(subObject))">Reject</button>
+                                    <button ng-hide="subObject.reviewID || Status=='Ended'" class="btn btn-xs btn-success" ng-click="assign(formData.email[subObject.submittedBy.email],value.getId(subObject))">Assign</button> <p style="color:green;font-size: 13px;font-weight: 700" ng-show="subObject.reviewID && Status!='Ended'">ASSIGNED</p><p><p style="color:red;font-size: 13px;font-weight: 700 " ng-show="!subObject.reviewID && Status=='Ended'">NOT ASSIGNED</p></p>
+                                    <p style="color:green;font-size: 13px;font-weight: 700 " ng-show="subObject.reviewID && Status=='Ended' && subObject.submissionStatus=='accepted' ">Accepted</p><p style="color:red;font-size: 13px;font-weight: 700 " ng-show="subObject.reviewID && Status=='Ended' && subObject.submissionStatus=='rejected' ">Rejected</p>
+                                </td>
                             </tr>
 
 
@@ -205,13 +213,16 @@
                                                         <dd >{{coAuth.email}}</dd>
                                                     </dl>
                                                 </div>
+                                                <div class="modal-footer">
+                                                   <!-- <button type="button" class="btn btn-sm btn-info" ><a style="text-decoration:none;color:white" target="_blank" ng-href="/uploads/{{ value.getId(subObject)}}.pdf">Download</a></button>
+                                                --></div>
                                             </div>
                                         </div>
                                     </div>
                                 </td>
 
-                                <td><p data-toggle="modal" data-target="#modal1{{subObject.submittedBy.email}}"><a>{{subObject.submittedBy.email}}</a></p>
-                                    <div class="modal fade" id="modal1{{subObject.submittedBy.email}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <td><p data-toggle="modal" data-target="#modal1{{value.getId(subObject.submittedBy)}}"><a>{{subObject.submittedBy.email}}</a></p>
+                                    <div class="modal fade" id="modal1{{value.getId(subObject.submittedBy)}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
@@ -244,7 +255,84 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td colspan="3"><button class="btn btn-xs btn-info"><a style="text-decoration:none;color:white" target="_blank" ng-href="/uploads/{{ value.getId(subObject)}}.pdf">Download</a></button></td>
+                                <td colspan="3"><button type="button" class="btn btn-xs btn-warning" ng-click="withdrawSubmission(value.getId(subObject))">Withdraw</button></td>
+                            </tr>
+
+
+                            <tr class="odd gradeX" ng-repeat="subObject in confObject.conferenceSubmissions track by $index" ng-show="subObject.submissionStatus=='closed'">
+                                <td ><span class="glyphicon glyphicon-stop" style="color:red"></span></td>
+                                <td><p data-toggle="modal" data-target="#modal12{{value.getId(subObject)}}"><a>{{subObject.submissionTitle}}</a></p>
+                                    <div class="modal fade" id="modal12{{value.getId(subObject)}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                    <h4 class="modal-title" >{{subObject.submissionTitle}}</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <dl class="dl-horizontal">
+                                                        <dt>Abstract</dt>
+                                                        <dd>{{ subObject.abstract }}</dd>
+                                                    </dl>
+                                                    <dl class="dl-horizontal">
+                                                        <dt>Keywords</dt>
+                                                        <dd>{{subObject.keywords}}</dd>
+                                                    </dl>
+                                                    <dl class="dl-horizontal">
+                                                        <dt>Submission Status </dt>
+                                                        <dd>{{ subObject.submissionStatus}}</dd>
+                                                    </dl>
+                                                    <dt >Co-Authors:</dt>
+                                                    <dl class="dl-horizontal" ng-repeat="coAuth in subObject.coAuthors">
+                                                        <dt>Name</dt>
+                                                        <dd >{{coAuth.firstName}} {{coAuth.lastName}}</dd>
+                                                        <dt>Email</dt>
+                                                        <dd >{{coAuth.email}}</dd>
+                                                    </dl>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td colspan="4"><p data-toggle="modal" data-target="#modal11{{value.getId(subObject.submittedBy)}}"><a>{{subObject.submittedBy.email}}</a></p>
+                                    <div class="modal fade" id="modal11{{value.getId(subObject.submittedBy)}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                    <h4 class="modal-title" >Email: {{subObject.submittedBy.email}}</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <dl class="dl-horizontal">
+                                                        <dt>First Name</dt>
+                                                        <dd>{{subObject.submittedBy.firstName}}</dd>
+                                                    </dl>
+                                                    <dl class="dl-horizontal">
+                                                        <dt>Last Name</dt>
+                                                        <dd>{{subObject.submittedBy.lastName}}</dd>
+                                                    </dl>
+                                                    <dl class="dl-horizontal">
+                                                        <dt>Institution </dt>
+                                                        <dd>{{subObject.submittedBy.institution}}</dd>
+                                                    </dl>
+                                                    <dl class="dl-horizontal">
+                                                        <dt>Address</dt>
+                                                        <dd>{{subObject.submittedBy.postalAddress}}, {{subObject.submittedBy.city}}, {{subObject.submittedBy.state}}</dd>
+                                                        <dt>Country</dt>
+                                                        <dd>{{subObject.submittedBy.country}}</dd>
+                                                    </dl>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+
                             </tr>
                         </tbody>
                     </table>

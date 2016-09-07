@@ -34,6 +34,13 @@ angular.module('UserServiceModule',[]).factory('userService',['$http',function($
                     country: country
                 }
             )
+        },
+        updatePassword : function(userID,oldPassword,newPassword){
+            return $http.post("/profile/password",{
+                userId:userID,
+                oldPass:oldPassword,
+                newPass:newPassword
+            })
         }
     }
 

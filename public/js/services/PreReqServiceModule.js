@@ -46,6 +46,12 @@ angular.module('PreReqServiceModule',[]).factory('PreReqService',['$http',functi
                 {
 
                 });
+        },
+        getUserObject: function(id) {
+            return $http.post("/priv/getUser",
+                {
+                    userId:id
+                });
         }
     }
 }]);

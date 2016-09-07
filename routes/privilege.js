@@ -27,6 +27,16 @@ router.route('/request')
                 res.send({message: "success"});}
         })
     });
+
+router.route('/getUser')
+    .post(function(req,res){
+        User.findOne({'_id':req.body.userId},function(err,body){
+            if(err){console.log("not able to find user");}
+            else{console.log("success");
+                res.send(body);}
+        })
+    });
+
 router.route('/new')
     .post(function(req, res){
         console.log('Accept... userid'+ req.body.userid);

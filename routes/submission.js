@@ -72,7 +72,7 @@ router.route('/getoldinfo')
     .post(function(req,res) {
         Submission.findOne({'submittedBy':req.body.user._id,'confID':req.body.conference._id}).populate({path:'reviewID',model:'Review'}).exec(function(err,data1){
             if (data1) {
-                if(data1.submissionStatus =='complete') {
+                /*if(data1.submissionStatus =='complete') {
                     console.log("inside updated submission getold");
                     var mail = {
                         from: "teamninetk@gmail.com",
@@ -89,7 +89,7 @@ router.route('/getoldinfo')
                         }
 
                     });
-                }
+                }*/
                 res.json(data1);
             }
         });

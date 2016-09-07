@@ -47,6 +47,22 @@ angular.module('MyConfControllerModule',[]).controller('MyConfController',functi
             $state.go($state.current, {}, {reload: true});
         })
     };
+    $scope.withdrawSubmission=function(subId){
+        MyConfService.withdrawSubmission(subId).then(function(Object){
+            $state.go($state.current, {}, {reload: true});
+        })
+    };
+    $scope.acceptSubmission=function(subId){
+        MyConfService.acceptSubmission(subId).then(function(Object){
+            $state.go($state.current, {}, {reload: true});
+        })
+    };
+    $scope.rejectSubmission=function(subId){
+         MyConfService.rejectSubmission(subId).then(function(Object){
+             console.log(Object);
+             $state.go($state.current, {}, {reload: true});
+         })
+    };
 
     $scope.subDate = function(data) {
         var date = new Date();
@@ -81,7 +97,8 @@ angular.module('MyConfControllerModule',[]).controller('MyConfController',functi
                     $scope.authors.push(value.submittedBy)}
             })
         });
-        console.log($scope.authors)
+        console.log($scope.authors);
+        console.log("heheh");
     });
 
     $scope.reviewerFilter = function(auth,email) {
@@ -92,11 +109,12 @@ angular.module('MyConfControllerModule',[]).controller('MyConfController',functi
         $scope.users=[];
         angular.forEach($scope.bigData,function(data1,index){
           angular.forEach(data1.conferenceSubmissions,function(data2,index){
-              if(data2.submissionStatus=="complete"){
+              if(data2.submissionStatus=="complete" ){
                   $scope.users.push(data2.submittedBy.email);
               }
           })
         });
+        console.log($scope.users);
         if($scope.users.length!=1){
         var randomNumber=$scope.random(1,$scope.users.length);
         for(var i=0;i<$scope.users.length;i++) {

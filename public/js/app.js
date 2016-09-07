@@ -7,7 +7,8 @@ angular.module('cms', ['ui.router','xeditable','angularMoment','ui.bootstrap','b
     editableOptions.theme = 'bs3';
     $rootScope.value = {
         getId: function(row) {
-            return row._id
+            if(row!=null){
+            return row._id}
         }
     }
 });

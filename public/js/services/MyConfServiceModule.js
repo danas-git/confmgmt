@@ -43,6 +43,27 @@ angular.module('MyConfServiceModule',[]).factory('MyConfService',['$http',functi
                     confId:confId
                 }
             );
+        },
+        withdrawSubmission: function(subId){
+            return $http.post('/editConf/submission/withdraw',
+                {
+                   subId:subId
+                }
+            );
+        },
+        acceptSubmission: function(subId){
+            return $http.post('/editConf/submission/accept',
+                {
+                    subId:subId
+                }
+            );
+        },
+        rejectSubmission: function(subId){
+            return $http.post('/editConf/submission/reject',
+                {
+                    subId:subId
+                }
+            );
         }
     };
 }]);

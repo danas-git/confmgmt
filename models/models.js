@@ -12,11 +12,11 @@ var userSchema = new mongoose.Schema({
     state: String,
     country: String,
     institution: String,
+    verifiedStatus:String,
     privilege: {type: String, enum:['normal','chair','admin']},
     status: {type:String, enum: ['granted','removed','pending']},
     myConference:[{type:Schema.Types.ObjectId,ref:'Conference'}],
-    mySubmission:[{type:Schema.Types.ObjectId,ref:'Submission'}],
-    verifiedStatus: {type: String, enum:['verified','nonVerified']}
+    mySubmission:[{type:Schema.Types.ObjectId,ref:'Submission'}]
 });
 
 var conferenceSchema = new mongoose.Schema({
@@ -40,13 +40,13 @@ var submissionSchema = new mongoose.Schema({
     uploadStatus: {type:String, enum: ['complete','incomplete']},
     submittedBy:{type:Schema.Types.ObjectId,ref:'User'},
     confID:{type:Schema.Types.ObjectId,ref:'Conference'},
-    submissionStatus:{type:String,enum: ['complete','incomplete']},
+    submissionStatus:{type:String},
     reviewID:{type:Schema.Types.ObjectId,ref:'Review'}
 });
 
 var reviewSchema = new mongoose.Schema({
     reviewerExpertise: String,
-    overallEvaluation:{type:String, enum: ['strongaccept','accept','borderline','reject','strongreject','NotEvaluated']},
+    overallEvaluation:{type:String, enum: ['Strong Accept','Weak Accept','Borderline','Weak Reject','Strong Reject','NotEvaluated']},
     summary: String,
     strongPoints: String,
     weakPoints: String,
